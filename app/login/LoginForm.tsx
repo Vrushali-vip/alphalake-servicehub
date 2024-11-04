@@ -62,10 +62,12 @@ export default function LoginForm() {
     const session = useSession();
     useEffect(() => {
         if(session.data?.user) {
+            console.log("logged in");
+            
             const url = new URL(window.location.href);
             router.push(url.searchParams.get("callbackUrl") || "/servicehub")
         }
-    }, [session])
+    }, [session.data?.user, router]);
 
     return (
         <Form {...form}>

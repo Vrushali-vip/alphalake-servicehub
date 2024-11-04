@@ -50,6 +50,10 @@ export default function LoginForm() {
                 description: res.error
             })
         } else {
+            toast({
+                title: "Success",
+                description: "Logged in"
+            })
             const url = new URL(""+res?.url);
             router.push(url.searchParams.get("callbackUrl") || "/servicehub")
         }

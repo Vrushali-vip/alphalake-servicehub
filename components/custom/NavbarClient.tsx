@@ -10,12 +10,18 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { signOut, useSession } from "next-auth/react"
+import { useToast } from "@/hooks/use-toast";
 
 export default function NavbarClient() {
 
     const session = useSession();
+    const { toast } = useToast();
     function onLogOutClick() {
         signOut();
+        toast({
+            title: "Logged out",
+            description: "You have been logged out."
+        })
     }
 
     return (

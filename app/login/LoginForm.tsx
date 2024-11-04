@@ -65,7 +65,10 @@ export default function LoginForm() {
             console.log("logged in");
             
             const url = new URL(window.location.href);
-            router.push(url.searchParams.get("callbackUrl") || "/servicehub")
+            router.push(url.searchParams.get("callbackUrl") || "/servicehub");
+            if(process.env.NODE_ENV === "production") {
+                window.location.reload();
+            }
         }
     }, [session.data?.user, router]);
 

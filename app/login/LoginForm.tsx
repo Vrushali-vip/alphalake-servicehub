@@ -55,6 +55,7 @@ export default function LoginForm() {
                 description: "Logged in"
             })
             const url = new URL(""+res?.url);
+            router.refresh();
             router.push(url.searchParams.get("callbackUrl") || "/servicehub")
         }
     }

@@ -71,7 +71,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="min-h-screen p-4 md:p-8 lg:p-12 xl:p-16 bg-bland">
+      {/* <section className="min-h-screen p-4 md:p-8 lg:p-12 xl:p-16 bg-bland">
         <h2 className="text-2xl xl:text-4xl my-4 text-center font-extrabold">Services Overview</h2>
 
         <div className="my-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -80,7 +80,7 @@ export default function Home() {
             <div className="grid items-center justify-center border rounded-md min-h-48">Some Content</div>
             <div className="grid items-center justify-center border rounded-md min-h-48">Some Content</div>
         </div>
-      </section>
+      </section> */}
       
 
     </main>

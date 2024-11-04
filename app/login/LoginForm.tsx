@@ -67,7 +67,7 @@ export default function LoginForm() {
             const url = new URL(window.location.href);
             router.push(url.searchParams.get("callbackUrl") || "/servicehub");
             if(process.env.NODE_ENV === "production") {
-                window.location.reload();
+                router.replace(url.searchParams.get("callbackUrl") || "/servicehub");
             }
         }
     }, [session.data?.user, router]);

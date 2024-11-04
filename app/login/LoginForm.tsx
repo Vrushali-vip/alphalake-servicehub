@@ -14,9 +14,10 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -54,11 +55,17 @@ export default function LoginForm() {
                 title: "Success",
                 description: "Logged in"
             })
-            const url = new URL(""+res?.url);
             router.refresh();
-            router.push(url.searchParams.get("callbackUrl") || "/servicehub")
         }
     }
+    
+    const session = useSession();
+    useEffect(() => {
+        if(session.data?.user) {
+            const url = new URL(window.location.href);
+            router.push(url.searchParams.get("callbackUrl") || "/servicehub")
+        }
+    }, [session])
 
     return (
         <Form {...form}>

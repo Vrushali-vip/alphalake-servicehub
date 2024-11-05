@@ -6,6 +6,7 @@ import Navbar from "@/components/custom/Navbar";
 import Footer from "@/components/custom/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import AuthProvider from "@/components/custom/AuthProvider";
+import NextJsTopLoader from "nextjs-toploader";
 
 const mont = Montserrat({
   variable: "--font-mont",
@@ -37,6 +38,7 @@ export default function RootLayout({
         <body
           className={`${mont.variable} ${robo.variable} dark antialiased max-w-100vw overflow-x-hidden`}
         >
+          <NextJsTopLoader />
           <Navbar />
           {children}
           <Footer />

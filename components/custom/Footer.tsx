@@ -37,6 +37,9 @@ export default function Footer() {
                     <div className="bg-white border rounded-full w-32 h-32 grid place-items-center p-2 overflow-hidden" title="ISO 14001 Certified">
                         <Image src="/iso2-bg.png" width={200} height={200} className="object-contain" alt="ISO 14001 Certified" />
                     </div>
+                    <div className="bg-white border rounded-full w-32 h-32 grid place-items-center p-2 overflow-hidden" title="Cyber Essentials Certified">
+                        <Image src="/cyber_essentials.png" width={200} height={200} className="object-cover" alt="Cyber Essentials Certified" />
+                    </div>
                 </div>
                 <div className="grid max-w-7xl mx-auto justify-between grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                     <div>

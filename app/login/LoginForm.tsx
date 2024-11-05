@@ -56,6 +56,9 @@ export default function LoginForm() {
                 description: "Logged in"
             })
             router.refresh();
+            if(process.env.NODE_ENV === "production") {
+                window.location.reload();
+            }
         }
     }
     
@@ -66,9 +69,6 @@ export default function LoginForm() {
             
             const url = new URL(window.location.href);
             router.push(url.searchParams.get("callbackUrl") || "/servicehub");
-            if(process.env.NODE_ENV === "production") {
-                router.replace(url.searchParams.get("callbackUrl") || "/servicehub");
-            }
         }
     }, [session.data?.user, router]);
 

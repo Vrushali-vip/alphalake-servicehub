@@ -12,7 +12,7 @@ export default function Login() {
         <main>
             <section className="min-h-screen grid items-center justify-center">
                 <div className="bg-card border text-card-foreground shadow-md rounded-md p-4">
-                    <h1 className="text-2xl font-bold mb-4">Partner Login</h1>
+                    <h1 className="text-2xl font-bold mb-4">Customer Login</h1>
                     <Suspense>
                         <LoginForm />
                     </Suspense>

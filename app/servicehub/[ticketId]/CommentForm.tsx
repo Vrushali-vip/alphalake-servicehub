@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/dialog"
 import { useState } from "react";
 import FileInput from "@/components/custom/FileInput";
-import { clientRevalidate } from "./action";
+import { clientRevalidate } from "../action";
 
 const formSchema = z.object({
     content: z.string()

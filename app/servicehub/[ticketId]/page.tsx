@@ -3,7 +3,7 @@ import { Ticket, TicketComment } from "../types";
 import FullScreenImage from "@/components/custom/FullScreenImage";
 import { Suspense } from "react";
 import { Clock } from "lucide-react";
-import CommentForm from "../CommentForm";
+import CommentForm from "./CommentForm";
 import GoBack from "@/components/custom/GoBack";
 
 export default async function TicketById({ params }: { params: { ticketId: string } }) {

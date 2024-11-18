@@ -9,7 +9,7 @@ import { Suspense } from "react";
 export type Filters = {
   status?: string;
   keyword?: string;
-  creationDate?: string;
+  created?: string;
 };
 
 export default async function ServiceHub({

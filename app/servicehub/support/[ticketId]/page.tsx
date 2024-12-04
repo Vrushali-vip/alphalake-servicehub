@@ -1,11 +1,10 @@
 import pb, { getImageUrl } from "@/lib/pocketbase";
-import { Ticket, TicketComment } from "../types";
+import { Ticket, TicketComment } from "../../types"
 import FullScreenImage from "@/components/custom/FullScreenImage";
 import CommentForm from "./CommentForm";
 import GoBack from "@/components/custom/GoBack";
-import ArticleCardSkeleton from "@/components/custom/ArticleCardSkeleton";
 import { Button } from "@/components/ui/button";
-import { MarkResolvedButton } from "@/components/custom/MarkResolvedButton";
+import UpdateTicketStatus from "../UpdateTicketStatus";
 
 
 export const revalidate = 0;
@@ -13,7 +12,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
     const [ticket, comments] = await Promise.all([
         pb.collection("tickets").getOne<Ticket>(params.ticketId, {
             expand: "customer,support",
-            fields: "id,title,status,description,created,attachments,expand,customer,customer.id,exapand,support,support.id,support.name,support.role,support.sub",
+            fields: "id,title,status,description,created,attachments,expand,customer,customer.id,support,support.id,support.name,support.role,support.sub",
         }),
         pb.collection("ticket_comments").getFullList<TicketComment>({
             filter: `ticket.id="${params.ticketId}"`,
@@ -28,12 +27,8 @@ export default async function TicketById({ params }: { params: { ticketId: strin
         <main className="min-h-screen p-4 lg:px-8">
             <div className="flex justify-between items-center mb-6 mr-2">
                 <GoBack />
-                {/* <Button>
-                    Mark ticket as resolved
-                </Button> */}
-                <MarkResolvedButton ticketId={params.ticketId} currentStatus={ticket.status} />
+                <UpdateTicketStatus ticketId={ticket.id} />
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* Ticket details */}
                 <div className="col-span-3 space-y-6">
                     <div className="p-6 border rounded-lg shadow-sm">
@@ -72,7 +67,6 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                     </div>
 
                     {/* Comments section */}
-
                     <div className="space-y-4">
                         <h2 className="text-lg font-semibold">Comments ({comments.length})</h2>
                         {comments.map((comment) => (
@@ -81,16 +75,16 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                                     <div className="flex items-center space-x-3">
                                         <img
                                             src={
-                                                comment.expand.user.avatar
+                                                comment.expand?.user?.avatar
                                                     ? pb.files.getUrl(comment.expand.user, comment.expand.user.avatar)
                                                     : "/default-avatar.png"
                                             }
-                                            alt={comment.expand.user.name}
+                                            alt={comment.expand?.user?.name}
                                             className="w-10 h-10 rounded-full object-cover"
                                         />
                                         <div>
-                                            <p className="text-sm text-white-600 font-semibold">{comment.expand.user.name}</p>
-                                            <p className="text-xs text-gray-500 mt-1">{comment.expand.user.role}</p>
+                                            <p className="text-sm text-white-600 font-semibold">{comment.expand?.user?.name}</p>
+                                            <p className="text-xs text-gray-500 mt-1">{comment.expand?.user?.role}</p>
                                         </div>
                                     </div>
 
@@ -115,39 +109,6 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                     </div>
                     <CommentForm ticketId={params.ticketId} />
                 </div>
-
-                {/* Support Specialist */}
-                {
-                    ticket.expand.support &&
-                    <div className="">
-                        <div className="border rounded-lg p-6 shadow-sm space-y-6" >
-                            <h3 className="text-lg font-semibold mb-4">Your Support Specialist</h3>
-                            <div className="flex items-center mb-4">
-                                <img
-                                    src={
-                                        ticket.expand.support.avatar
-                                            ? pb.files.getUrl(ticket.expand.support, ticket.expand.support.avatar)
-                                            : "/default-avatar.png"
-                                    }
-                                    alt={ticket.expand.support.name}
-                                    className="w-10 h-10 rounded-full object-cover"
-                                />
-                                <div className="ml-4">
-                                    <h4 className="font-medium">{ticket.expand.support.name}</h4>
-                                    <p className="text-sm text-gray-600">{ticket.expand.support.role}</p>
-                                </div>
-                            </div>
-                            <p className="text-sm text-gray-600">
-                                {ticket.expand.support.sub}
-                            </p>
-                        </div>
-
-                        <div className="mt-4">
-                            <ArticleCardSkeleton />
-                        </div>
-                    </div>
-                }
-            </div>
         </main>
     );
 }

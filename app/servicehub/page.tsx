@@ -28,7 +28,6 @@ export default async function ServiceHub({
       </div>
 
       <div className="p-4 lg:px-8 flex justify-between items-center">
-        <h2 className="font-bold">Tickets</h2>
         <Suspense>
           <TicketForm />
         </Suspense>

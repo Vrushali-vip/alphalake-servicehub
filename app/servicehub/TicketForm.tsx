@@ -1,151 +1,3 @@
-// "use client"
-
-// import { zodResolver } from "@hookform/resolvers/zod"
-// import { useForm } from "react-hook-form"
-// import { z } from "zod";
-
-// import { Button } from "@/components/ui/button"
-// import {
-//     Form,
-//     FormControl,
-//     FormField,
-//     FormItem,
-//     FormLabel,
-//     FormMessage,
-// } from "@/components/ui/form";
-// import { useToast } from "@/hooks/use-toast";
-// import { Textarea } from "@/components/ui/textarea";
-
-// import { Plus } from "lucide-react";
-// import {
-//     Dialog,
-//     DialogClose,
-//     DialogContent,
-//     DialogHeader,
-//     DialogTitle,
-//     DialogTrigger,
-// } from "@/components/ui/dialog"
-// import { useState } from "react";
-// import { clientRevalidate } from "./action";
-// import FileInput from "@/components/custom/FileInput";
-// import { Input } from "@/components/ui/input";
-
-// const formSchema = z.object({
-//     title: z.string().min(5),
-//     description: z.string().min(15)
-// })
-
-// export default function TicketForm() {
-
-//     const { toast } = useToast();
-//     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-//     const [working, setWorking] = useState<boolean>(false);
-//     const [files, setFiles] = useState<File[]>([]);
-//     const form = useForm<z.infer<typeof formSchema>>({
-//         resolver: zodResolver(formSchema),
-//         defaultValues: {
-//             title: "",
-//             description: ""
-//         },
-//     })
-
-//     async function onSubmit(values: z.infer<typeof formSchema>) {
-//         setWorking(true);
-
-//         const fd = new FormData();
-//         fd.append("description", values.description);
-//         fd.append("title", values.title);
-//         fd.append("files_attached", ""+files.length);
-
-//         // append files to form data
-//         files.forEach((file, i) => fd.append(`attachments_${i}`, file));
-
-//         const res = await fetch("/api/tickets", { method: "POST", body: fd });
-//         const responseData = await res.json();
-
-//         if (responseData.error) {
-//             toast({
-//                 variant: "destructive",
-//                 title: "Error",
-//                 description: responseData.error
-//             })
-//         } else {
-//             await clientRevalidate("/servicehub");
-//             toast({
-//                 title: "Success",
-//                 description: "Ticket added successfully."
-//             })
-//         }
-
-//         form.reset();
-//         setWorking(false);
-//         setDialogOpen(false);
-//     }
-
-//     function onOpenChange(open: boolean) {
-//         if (!open) form.reset();
-//         setDialogOpen(open);
-//     }
-
-//     function onFileInputChange(files: File[]) {
-//         setFiles(files);
-//     }
-
-//     return (
-//         <Dialog onOpenChange={onOpenChange} open={dialogOpen}>
-//             <DialogTrigger asChild><Button size="sm"><Plus size={18} className="mr-2" /> Create</Button></DialogTrigger>
-//             <DialogContent>
-//                 <DialogHeader>
-//                     <DialogTitle>Create Ticket</DialogTitle>
-//                 </DialogHeader>
-//                 <Form {...form}>
-//                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-//                         <FormField
-//                             control={form.control}
-//                             name="title"
-//                             render={({ field }) => (
-//                                 <FormItem>
-//                                     <FormLabel>Title</FormLabel>
-//                                     <FormControl>
-//                                         <Input placeholder="Type a title" {...field} />
-//                                     </FormControl>
-//                                     <FormMessage />
-//                                 </FormItem>
-//                             )}
-//                         />
-
-//                         <FormField
-//                             control={form.control}
-//                             name="description"
-//                             render={({ field }) => (
-//                                 <FormItem>
-//                                     <FormLabel>Description</FormLabel>
-//                                     <FormControl>
-//                                         <Textarea placeholder="Type a comment" {...field} />
-//                                     </FormControl>
-//                                     <FormMessage />
-//                                 </FormItem>
-//                             )}
-//                         />
-
-//                         <div className="border rounded-md">
-//                             <FileInput onChange={onFileInputChange} label="Add Images" multiple={true} accept="image/*" />
-//                         </div>
-
-//                         <div className="flex justify-end gap-2">
-//                             <DialogClose asChild>
-//                                 <Button size="sm" variant="outline" type="reset">Cancel</Button>
-//                             </DialogClose>
-//                             <Button disabled={working} size="sm" type="submit">{working ? "Working..." : "Submit"}</Button>
-//                         </div>
-//                     </form>
-//                 </Form>
-//             </DialogContent>
-//         </Dialog>
-
-//     )
-// }
-
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -164,10 +16,10 @@ import {
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+
 import { Plus } from "lucide-react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -183,320 +35,270 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ArticleCardSkeleton from "@/components/custom/ArticleCardSkeleton";
+import { useSession } from "next-auth/react";
 
-// Validation schema for the form
 const formSchema = z.object({
-  organisation: z.string().min(1, { message: "Please select an organisation" }),
-  title: z
-    .string()
-    .min(10, { message: "Title should be at least 10 characters" }),
-  description: z
-    .string()
-    .min(15, { message: "Description should be at least 15 characters" }),
+  title: z.string().min(5, { message: "Title must be at least 5 characters long" }),
   topic: z.string().min(1, { message: "Please select a topic" }),
-});
+  issue: z.string().min(1, { message: "Please select an issue" }),
+  subIssue: z.string().optional(),
+  description: z.string().min(15, { message: "Description should be at least 15 characters" }),
+  invitation_mail: z.string().email({ message: "Enter a valid email" }),
+  // attachments: z.number().optional(),
+  attachments: z.array(z.instanceof(File)).optional(),
 
-const suggestedArticles = [
-  { title: "How to resolve common issues", id: 1 },
-  { title: "Troubleshooting guide", id: 2 },
-  { title: "FAQ on similar problems", id: 3 },
-];
+});
 
 export default function TicketForm() {
   const { toast } = useToast();
+  const [working, setWorking] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [working, setWorking] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
-  const [step, setStep] = useState(1);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [isEditable, setIsEditable] = useState(false); // Control editability of organisation and topic
-
-  const username = "John Doe"; // Replace with dynamic username as needed.
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isEditable, setIsEditable] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      organisation: "",
       title: "",
-      description: "",
       topic: "",
+      issue: "",
+      subIssue: "",
+      description: "",
+      invitation_mail: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setWorking(true);
-
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const fd = new FormData();
-    fd.append("description", values.description);
     fd.append("title", values.title);
+    fd.append("topic", values.topic);
+    fd.append("issue", values.issue);
+    fd.append("subIssue", values.subIssue || "");
+    fd.append("description", values.description);
+    fd.append("invitation_mail", values.invitation_mail);
     fd.append("files_attached", "" + files.length);
+
     files.forEach((file, i) => fd.append(`attachments_${i}`, file));
+    try {
+      const response = await fetch("/api/tickets", {
+        method: "POST",
+        body: fd,
+      });
 
-    const res = await fetch("/api/tickets", { method: "POST", body: fd });
-    const responseData = await res.json();
+      const responseData = await response.json();
 
-    if (responseData.error) {
+      if (responseData.error) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: responseData.error,
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: "Ticket submitted successfully.",
+        });
+        form.reset();
+        setDialogOpen(false);  
+      }
+    } catch (error) {
+      console.error(error);
       toast({
         variant: "destructive",
         title: "Error",
-        description: responseData.error,
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: "Ticket added successfully.",
+        description: "An error occurred while submitting the ticket.",
       });
     }
-
-    form.reset();
-    setWorking(false);
-    setDialogOpen(false);
-    setStep(1); // Reset step to 1 after submit
-  }
-
-  function onOpenChange(open: boolean) {
-    if (!open) form.reset();
-    setDialogOpen(open);
-  }
+  };
 
   function onFileInputChange(files: File[]) {
     setFiles(files);
+}
+  const goNext = () => {
+    if (currentStep < 3) setCurrentStep(currentStep + 1);
+  };
+
+  const goBack = () => {
+    if (currentStep > 1) setCurrentStep(currentStep - 1);
+  };
+
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
   }
 
-  // Function to handle next step
-  const handleNextStep = () => {
-    setStep(step + 1);
-  };
-
-  // Function to handle previous step
-  const handlePreviousStep = () => {
-    if (step > 1) setStep(step - 1);
-  };
-
-  // Function to display suggestions based on user input
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    form.setValue("description", e.target.value);
-    setShowSuggestions(e.target.value.length > 0);
-  };
+  if (!session) {
+    return <div>You are not logged in. Please log in to continue.</div>;
+  }
 
   return (
-    <Dialog onOpenChange={onOpenChange} open={dialogOpen}>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">
-          <Plus size={18} className="mr-2" /> Create
+        <Button size="sm" className="ml-auto">
+          <Plus size={10} /> Create Ticket
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <div className="flex justify-between mb-6 text-sm font-medium text-gray-500">
-          <div
-            className={`flex-1 text-center ${
-              step === 1 ? "text-blue-600 font-bold" : ""
-            }`}
-          >
-            1. What's happening
-          </div>
-          <div
-            className={`flex-1 text-center ${
-              step === 2 ? "text-blue-600 font-bold" : ""
-            }`}
-          >
-            2. What we need
-          </div>
-          <div
-            className={`flex-1 text-center ${
-              step === 3 ? "text-blue-600 font-bold" : ""
-            }`}
-          >
-            3. Next steps
+        {/* Left Side: Form */}
+        <div className="flex justify-center mb-8 ml-4">
+          {/* Step Indicators */}
+          <div className="flex items-center mb-6 space-x-4">
+            {["What's happening", "What we need", "Next steps"].map((label, index) => (
+              <div key={index} className="flex items-center space-x-2">
+                {/* Step Circle */}
+                <div
+                  className={`flex items-center justify-center w-6 h-6 rounded-full font-semibold ${index + 1 < currentStep
+                    ? "bg-green-500 text-white "
+                    : index + 1 === currentStep
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-300 text-gray-600"
+                    }`}
+                >
+                  {index + 1 < currentStep ? "✓" : index + 1}
+                </div>
+
+                {/* Step Label */}
+                <span
+                  className={`text-sm ${index + 1 < currentStep ? "text-green-500 font-bold" : index + 1 === currentStep ? "text-blue-600 font-bold" : "text-gray-500"}`}
+                >
+                  {label}
+                </span>
+
+                {/* Step Line */}
+                {index < 2 && (
+                  <div
+                    className={`flex-1 h-1 ${index + 1 < currentStep ? "bg-green-500 text-white" : index + 1 === currentStep ? "bg-blue-500" : "bg-gray-300"
+                      }`}
+                  />
+                )}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Step Indicator */}
 
-        <div className="flex flex-wrap lg:flex-nowrap space-x-4">
-          <div className="w-full lg:w-1/2">
+        <div className="flex space-x-6">
+
+          <div className="w-2/3">
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
-              >
-                {step === 1 && (
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <div className={currentStep === 1 ? "" : "hidden"}>
                   <>
-                    <h2 className="text-lg font-semibold mb-4">
-                      Hi {username}, our experts are ready to help
-                    </h2>
+                    <div className="flex flex-wrap lg:flex-nowrap space-x-4 mb-20 items-center">
+                      <div className="text-center lg:text-left lg:flex-1">
+                        <h2 className="text-3xl lg:text-4xl font-semibold typewriter">
+                          Hi {session?.user?.name}, our experts are ready to help
+                        </h2>
+                      </div>
+                    </div>
                     <DialogHeader>
-                      <DialogTitle>Describe What's Happening</DialogTitle>
+                      <DialogTitle className="text-2xl mb-4 mt-20">Describe What's Happening</DialogTitle>
                     </DialogHeader>
-                    {/* Organisation Select */}
-                    <p className="text-sm">
-                      The more detail you include, the more we can help
-                    </p>
                     <FormField
                       control={form.control}
-                      name="organisation"
+                      name="title"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Organisation</FormLabel>
+                          <FormLabel>Describe the issue in 10 or more words</FormLabel>
                           <FormControl>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              // disabled={!isEditable}
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select an organisation" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="org1">
-                                  Alphalake Ai - UK
-                                </SelectItem>
-                                <SelectItem value="org2">
-                                  Other Organisation
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <Input {...field} placeholder="" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-
-                    {/* Topic Select */}
                     <FormField
                       control={form.control}
                       name="topic"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Topic</FormLabel>
+                          <FormLabel>Select topic</FormLabel>
                           <FormControl>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              // disabled={!isEditable}
-                            >
+                            <Select onValueChange={field.onChange} value={field.value}>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select a topic" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="fixed-assets">
-                                  Fixed Assets
-                                </SelectItem>
-                                <SelectItem value="inventory">
-                                  Inventory
-                                </SelectItem>
-                                <SelectItem value="reporting">
-                                  Reporting
-                                </SelectItem>
+                                <SelectItem value="fixed-assets">Fixed Assets</SelectItem>
+                                <SelectItem value="inventory">Inventory</SelectItem>
+                                <SelectItem value="reporting">Reporting</SelectItem>
                               </SelectContent>
                             </Select>
                           </FormControl>
                           <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    {/* Description Textarea */}
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Description</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Provide details of the issue"
-                              {...field}
-                              onChange={handleDescriptionChange}
-                              required
-                            />
-                          </FormControl>
-                          <FormMessage />
-
-                          {/* Suggestions */}
-                          {showSuggestions && (
-                            <div className="suggestions mt-2 border rounded p-2 bg-gray-50">
-                              <p className="font-semibold">These might help:</p>
-                              <ul>
-                                {suggestedArticles.map((article) => (
-                                  <li
-                                    key={article.id}
-                                    className="text-blue-500 cursor-pointer"
-                                  >
-                                    {article.title}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
                         </FormItem>
                       )}
                     />
                   </>
-                )}
-                {step === 2 && (
+                </div>
+
+
+                <div className={currentStep === 2 ? "" : "hidden"}>
+
                   <>
-                    <DialogHeader>
-                      <DialogTitle>Show us the Problem</DialogTitle>
-                    </DialogHeader>
-                    {/* Organisation Select */}
                     <FormField
                       control={form.control}
-                      name="organisation"
+                      name="title"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Organisation</FormLabel>
+                          <FormLabel>Subject</FormLabel>
                           <FormControl>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              disabled={!isEditable}
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select an organisation" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="org1">
-                                  Alphalake Ai - UK
-                                </SelectItem>
-                                <SelectItem value="org2">
-                                  Other Organisation
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <Input {...field} placeholder="" disabled={!isEditable} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-
-                    {/* Topic Select */}
                     <FormField
                       control={form.control}
                       name="topic"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Topic</FormLabel>
+                          <FormLabel>Select topic</FormLabel>
                           <FormControl>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              disabled={!isEditable}
-                            >
+                            <Select onValueChange={field.onChange} value={field.value} disabled={!isEditable}>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select a topic" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="fixed-assets">
-                                  Fixed Assets
+                                <SelectItem value="fixed-assets">Fixed Assets</SelectItem>
+                                <SelectItem value="inventory">Inventory</SelectItem>
+                                <SelectItem value="reporting">Reporting</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="issue"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>What does your question relate to? (optional)</FormLabel>
+                          <FormControl>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select an Issue" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="ACCOUNT_ACCESS_MODIFICATION">
+                                  Account access modification
                                 </SelectItem>
-                                <SelectItem value="inventory">
-                                  Inventory
+                                <SelectItem value="DISCOUNTS_AND_PROMOTIONS">
+                                  Discounts and promotions
                                 </SelectItem>
-                                <SelectItem value="reporting">
-                                  Reporting
+                                <SelectItem value="SUBSCRIPTION_CHANGES">
+                                  Subscription changes
+                                </SelectItem>
+                                <SelectItem value="SUBSCRIPTION_INVOICES_AND_PAYMENTS">
+                                  Subscription invoices and payments
+                                </SelectItem>
+                                <SelectItem value="TRANSFER_SUBSCRIPTION">
+                                  Transfer subscription
                                 </SelectItem>
                               </SelectContent>
                             </Select>
@@ -505,100 +307,105 @@ export default function TicketForm() {
                         </FormItem>
                       )}
                     />
-
-                    {/* Edit Button */}
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => setIsEditable(!isEditable)}
-                      className="mt-2"
-                    >
-                      {isEditable ? "Lock" : "Edit"}
-                    </Button>
-
-                    {/* Description Textarea */}
                     <FormField
                       control={form.control}
                       name="description"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Description</FormLabel>
+                          <FormLabel>Tell us what happened</FormLabel>
                           <FormControl>
-                            <Textarea
-                              placeholder="Provide details of the issue"
-                              {...field}
-                              onChange={handleDescriptionChange}
-                              required
-                            />
+                            <Textarea {...field} placeholder="Provide details" />
                           </FormControl>
                           <FormMessage />
-                          <p className="font-semibold">These might help:</p>
-                          {/* Suggestions */}
-                          {showSuggestions && (
-                            <div className="suggestions mt-2 border rounded p-2 bg-gray-50">
-                              <ul>
-                                {suggestedArticles.map((article) => (
-                                  <li
-                                    key={article.id}
-                                    className="text-blue-500 cursor-pointer"
-                                  >
-                                    {article.title}
-                                  </li>
-                                ))}
-                              </ul>
+                        </FormItem>
+                      )}
+                    />
+                    <p className="text-sm text-gray-500">Include what you did before the problem appeared, what you've tried already, and anything else you think would be useful</p>
+                    <div className="border rounded-md">
+                    <FileInput onChange={onFileInputChange} label="Add Images" multiple={true} accept="image/*" />
+                </div>
+
+                    {/* <FormField
+                      control={form.control}
+                      name="attachments"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Upload document (optional)</FormLabel>
+                          <FormControl>
+                            <FileInput
+                              onChange={(newFiles) => {
+                                field.onChange(newFiles);
+                              }}
+                              label="Upload attachments"
+                              multiple
+                              accept=".pdf,.doc,.docx,image/*"
+                            />
+                          </FormControl>
+                          {field.value && field.value.length > 0 && (
+                            <div className="mt-2 flex flex-wrap gap-2">
+                              {field.value.map((file, index) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center bg-gray-100 p-2 rounded"
+                                >
+                                </div>
+                              ))}
                             </div>
                           )}
                         </FormItem>
                       )}
-                    />
+                    /> */}
                   </>
-                )}
+                </div>
+                <div className={currentStep === 3 ? "" : "hidden"}>
+                  <h1 className="text-xl font-bold">Share case progress with your colleagues</h1>
+                  <FormField
+                    control={form.control}
+                    name="invitation_mail"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Username</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="Enter email address" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-                {/* Navigation Buttons */}
-                <div className="flex justify-between mt-4">
-                  {step > 1 && (
-                    <Button
-                      onClick={handlePreviousStep}
-                      size="sm"
-                      variant="outline"
-                    >
-                      Previous
+                <div className="flex justify-between mt-6">
+                  {currentStep > 1 && (
+                    <Button onClick={goBack} type="button">
+                      Back
                     </Button>
                   )}
-                  {step < 3 ? (
-                    <Button
-                      onClick={handleNextStep}
-                      size="sm"
-                      variant="outline"
-                    >
+                  {currentStep < 3 ? (
+                    <Button onClick={goNext} type="button">
                       Next
                     </Button>
                   ) : (
-                    <Button disabled={working} size="sm" type="submit">
-                      {working ? "Working..." : "Submit"}
-                    </Button>
+                    <Button type="submit">Submit</Button>
                   )}
                 </div>
               </form>
             </Form>
           </div>
 
-          <div className="w-full lg:w-1/2 flex flex-col items-center space-y-4">
-            <div className="w-full lg:w-1/2 flex items-center justify-center">
+          {/* Right Side: Form */}
+          <div className="w-full md:w-3/4 lg:w-1/2 flex flex-col items-center space-y-4 px-4 md:px-0">
+            <div className="relative overflow-visible">
               <img
-                src="/ff1.png"
-                alt="Support Illustration"
-                className="max-w-full h-auto"
+                src="/robot.png"
+                alt="Experts ready to help"
+                className="w-48 sm:w-56 md:w-64 lg:w-72 max-w-full h-auto animate-zoom"
               />
             </div>
-
-            {/* Article Suggestions */}
             <ArticleCardSkeleton />
-
-            {/* Placeholder text */}
-            <p className="text-gray-500 mt-4">Articles coming soon</p>
+            <p className="text-gray-500 mt-4 text-center">More articles coming soon...</p>
           </div>
         </div>
+
       </DialogContent>
     </Dialog>
   );

@@ -18,6 +18,9 @@ export async function POST(request: NextRequest) {
             title: fd.get("title") as string, 
             description: fd.get("description") as string, 
             customer: session?.user.id, 
+            topic: fd.get("topic") as string,
+            issue: fd.get("issue") as string,
+            subIssue: fd.get("subIssue") as string,
             status: "OPEN", 
             attachments
         });
@@ -26,5 +29,40 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: "Ticket could not be created." });
+    }
+}
+
+
+
+export async function GET(req: NextRequest) {
+    const { searchParams } = new URL(req.url);
+    const filter = searchParams.get("filter");
+    const supportId = searchParams.get("supportId");
+
+    try {
+        let tickets = [];
+
+        if (filter === "assigned") {
+            tickets = await pb.collection("tickets").getFullList({
+                filter: `support.id="${supportId}"`,
+                expand: "customer",
+                fields: "id,title,status,description,created,attachments,expand,customer,customer.name,customer.id",
+                sort: "-created",
+            });
+        } else if (filter === "unassigned") {
+            tickets = await pb.collection("tickets").getFullList({
+                filter: `support.id=null`,
+                expand: "customer",
+                fields: "id,title,status,description,created,attachments,expand,customer,customer.name,customer.id",
+                sort: "-created",
+            });
+        } else {
+            return NextResponse.json({ error: "Invalid filter parameter" }, { status: 400 });
+        }
+
+        return NextResponse.json(tickets, { status: 200 });
+    } catch (error) {
+        console.error("Failed to fetch tickets:", error);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

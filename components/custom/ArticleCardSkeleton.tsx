@@ -2,30 +2,33 @@ import React from "react";
 
 const ArticleCardSkeleton = () => {
   return (
-    <div className="border p-4 rounded-lg shadow-sm bg-white max-w-sm">
-      <div className="text-gray-700 font-semibold mb-2">These might help</div>
-      <div className="flex items-center space-x-2 mb-2">
-        <div className="bg-blue-100 p-2 rounded-full">
-          <span role="img" aria-label="article">
-            📘
-          </span>
+    <div className="space-y-4 w-[100%] max-w-2xl">
+      {/* Text above the skeleton */}
+      <div className="font-bold text-xl text-center">These might help</div>
+
+      {/* Skeleton Loader */}
+      <div className="border p-4 rounded-lg shadow-sm bg-white animate-pulse">
+        {/* Placeholder for title */}
+        <div className="h-4 bg-gray-200 rounded w-1/3 mb-4"></div>
+
+        {/* Placeholder for icon and small text */}
+        <div className="flex items-center space-x-2 mb-4">
+          <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
         </div>
-        <p className="text-gray-500 text-sm">Help article</p>
-      </div>
-      <h3 className="text-lg font-bold text-gray-900 mb-2">
-        Register fixed assets
-      </h3>
-      <p className="text-gray-700 text-sm mb-2">
-        Assets can be registered individually or in bulk. ... We recommend you
-        have no more than 500 registered fixed assets in Xero.
-      </p>
-      <div className="flex flex-wrap gap-2">
-        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-          For small businesses
-        </span>
-        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-          Xero
-        </span>
+
+        {/* Placeholder for heading */}
+        <div className="h-6 bg-gray-200 rounded w-2/3 mb-4"></div>
+
+        {/* Placeholder for paragraph */}
+        <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-5/6 mb-4"></div>
+
+        {/* Placeholder for tags */}
+        <div className="flex flex-wrap gap-2">
+          <div className="h-6 bg-gray-200 rounded w-20"></div>
+          <div className="h-6 bg-gray-200 rounded w-24"></div>
+        </div>
       </div>
     </div>
   );

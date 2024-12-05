@@ -101,12 +101,12 @@ export default function UserManagement({ initialUsers }: UserManagementProps) {
 
   useEffect(() => {
     loadAdminData();
-  }, []);
+  },);
 
   useEffect(() => {
     form.reset();
     form.clearErrors();
-  }, [isEditMode]);
+  }, [form, isEditMode]);
 
   const loadAdminData = useCallback(async () => {
     try {
@@ -119,7 +119,7 @@ export default function UserManagement({ initialUsers }: UserManagementProps) {
     } catch (error) {
       console.error("Failed to load admin data", error);
     }
-  }, [toast]);
+  },[]);
 
   users.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -183,12 +183,12 @@ export default function UserManagement({ initialUsers }: UserManagementProps) {
         setIsEditMode(false);
         setEditingUser(null);
         await loadAdminData();
-      } catch (error: any) {
-        console.error("Error:", error);
+      } catch (error) {
+        console.error("An unexpected error occurred", error);
         toast({
           variant: "destructive",
           title: "Error",
-          description: error.message || "An unexpected error occurred.",
+          description: "An unexpected error occurred.",
         });
       }
     } else {
@@ -218,12 +218,12 @@ export default function UserManagement({ initialUsers }: UserManagementProps) {
         setDialogOpen(false);
         
         await loadAdminData();
-      } catch (error: any) {
-        console.error("Error:", error.message || error);
+      } catch (error) {
+        console.error("Error:", error);
         toast({
           variant: "destructive",
           title: "Error",
-          description: error.message || "An unexpected error occurred.",
+          description: "An unexpected error occurred.",
         });
       }
     }
@@ -418,7 +418,7 @@ export default function UserManagement({ initialUsers }: UserManagementProps) {
                     />
                   )}
 
-                  <Button type="submit" className="w-full mt-4">
+                  <Button type="submit" className="w-full mt-2">
                     {isEditMode ? "Update User" : "Create User"}
                   </Button>
                 </form>

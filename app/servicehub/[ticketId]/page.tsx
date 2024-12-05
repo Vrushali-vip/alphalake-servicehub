@@ -4,7 +4,6 @@ import FullScreenImage from "@/components/custom/FullScreenImage";
 import CommentForm from "./CommentForm";
 import GoBack from "@/components/custom/GoBack";
 import ArticleCardSkeleton from "@/components/custom/ArticleCardSkeleton";
-import { Button } from "@/components/ui/button";
 import { MarkResolvedButton } from "@/components/custom/MarkResolvedButton";
 
 

@@ -46,7 +46,7 @@ export default function TicketSearchFilter() {
 
   useEffect(() => {
     debouncedUpdateQuery();
-  }, [status, keyword, startDate, endDate]);
+  }, );
 
   const clearFilters = () => {
     setStatus(null);

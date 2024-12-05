@@ -44,18 +44,16 @@ const formSchema = z.object({
   subIssue: z.string().optional(),
   description: z.string().min(15, { message: "Description should be at least 15 characters" }),
   invitation_mail: z.string().email({ message: "Enter a valid email" }),
-  // attachments: z.number().optional(),
   attachments: z.array(z.instanceof(File)).optional(),
 
 });
 
 export default function TicketForm() {
   const { toast } = useToast();
-  const [working, setWorking] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [currentStep, setCurrentStep] = useState(1);
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditable] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -194,7 +192,7 @@ export default function TicketForm() {
                       </div>
                     </div>
                     <DialogHeader>
-                      <DialogTitle className="text-2xl mb-4 mt-20">Describe What's Happening</DialogTitle>
+                      <DialogTitle className="text-2xl mb-4 mt-20">Describe What is Happening</DialogTitle>
                     </DialogHeader>
                     <FormField
                       control={form.control}
@@ -320,7 +318,7 @@ export default function TicketForm() {
                         </FormItem>
                       )}
                     />
-                    <p className="text-sm text-gray-500">Include what you did before the problem appeared, what you've tried already, and anything else you think would be useful</p>
+                    <p className="text-sm text-gray-500">Include what you did before the problem appeared, what you have tried already, and anything else you think would be useful</p>
                     <div className="border rounded-md">
                     <FileInput onChange={onFileInputChange} label="Add Images" multiple={true} accept="image/*" />
                 </div>

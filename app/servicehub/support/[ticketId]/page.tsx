@@ -3,7 +3,6 @@ import { Ticket, TicketComment } from "../../types"
 import FullScreenImage from "@/components/custom/FullScreenImage";
 import CommentForm from "./CommentForm";
 import GoBack from "@/components/custom/GoBack";
-import { Button } from "@/components/ui/button";
 import UpdateTicketStatus from "../UpdateTicketStatus";
 
 

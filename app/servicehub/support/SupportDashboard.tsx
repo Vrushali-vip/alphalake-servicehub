@@ -43,8 +43,8 @@ export default async function SupportDashboard({
   const data = await fetchSupportData();
   const session = await getServerSession(authOptions);
 
-  let unassignedTickets: TicketListItemForSupport[] = [];
-  let assignedTickets: TicketListItemForSupport[] = [];
+  const unassignedTickets: TicketListItemForSupport[] = [];
+  const assignedTickets: TicketListItemForSupport[] = [];
 
   data.tickets.forEach((ticket) => {
     if (ticket.expand?.support?.id === session?.user.id) {

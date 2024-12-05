@@ -11,7 +11,7 @@ export type TicketListItem = {
 
 export type Ticket = TicketListItem & {
     expand: {
-        user: any;
+        user: string;
         customer: {
             id: string;
             name: string;

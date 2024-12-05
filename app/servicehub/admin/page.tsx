@@ -21,9 +21,12 @@
 //     return <AdminDashboard  initialUsers={initialUsers}/>;
 // }
 
+// "use server"
 import AdminDashboard from "./AdminDashboard";
 import pb from "@/lib/pocketbase";
 
+
+export const revalidate = 0;
 async function getUsers() {
     try {
         const users = await pb.collection("users").getFullList({

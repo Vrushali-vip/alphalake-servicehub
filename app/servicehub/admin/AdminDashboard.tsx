@@ -229,6 +229,7 @@ export default function UserManagement({ initialUsers }: UserManagementProps) {
     }
   };
 
+console.log(users);
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col space-y-4">
@@ -441,7 +442,7 @@ export default function UserManagement({ initialUsers }: UserManagementProps) {
                   className="border p-4 rounded-md flex flex-col items-center text-center"
                 >
                   <img 
-                    src={getAvatarUrl(user) ? getAvatarUrl(user) : '/img.jpg'} 
+                    src={user.avatar ? getAvatarUrl(user) : '/img.jpg'} 
                     alt={`avatar`} 
                     className="w-20 h-20 rounded-full mb-3 object-cover"
                   />

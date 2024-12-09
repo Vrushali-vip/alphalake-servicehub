@@ -31,8 +31,8 @@ export async function fetchSupportData(searchParams?: SupportPageSearchParams) {
     }),
   ]);
   return {
-    users,
-    tickets,
+    users: users.length? users: [],
+    tickets: tickets.length? tickets: [],
   };
 }
 
@@ -46,7 +46,7 @@ export default async function SupportDashboard({
   const unassignedTickets: TicketListItemForSupport[] = [];
   const assignedTickets: TicketListItemForSupport[] = [];
 
-  console.log(data.tickets);
+  // console.log(data.tickets);
 
   data.tickets.forEach((ticket) => {
     if (ticket.expand?.support?.id === session?.user.id) {

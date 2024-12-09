@@ -26,7 +26,6 @@ export default async function ServiceHub({
           Service Hub for {session?.user.sub}
         </h1>
       </div>
-
       <div className="p-4 lg:px-8 flex justify-between items-center">
         <Suspense>
           <TicketForm />

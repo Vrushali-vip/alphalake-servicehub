@@ -256,7 +256,6 @@ console.log(users);
             </SelectContent>
           </Select>
           <Button 
-            variant="outline" 
             onClick={() => {
               setNameFilter('');
               setRoleFilter('ALL');

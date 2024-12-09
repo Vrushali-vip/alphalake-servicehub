@@ -36,7 +36,19 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                         <div className="flex justify-between items-start">
                             {/* Title and Description */}
                             <div>
-                                <h1 className="text-2xl font-semibold">{ticket.title}</h1>
+                                <span className="flex items-center gap-2">
+                                    <img
+                                        src={
+                                            ticket.expand.customer.avatar
+                                                ? pb.files.getUrl(ticket.expand.customer, ticket.expand.customer.avatar)
+                                                : "/default-avatar.png"
+                                        }
+                                        alt={ticket.expand.customer.name}
+                                        className="w-10 h-10 rounded-full object-cover"
+                                    />
+                                    <h1 className="text-2xl font-semibold">{ticket.expand.customer.name}</h1>
+                                </span>
+                                <h1 className="text-xl mt-2 font-semibold">{ticket.title}</h1>
                                 <p className="text-sm text-gray-200 mt-2 flex items-center gap-2">
                                     <span
                                         className={`text-xs border rounded-md px-2 py-1 status-${ticket.status}`}
@@ -111,8 +123,6 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                     </div>
                     <CommentForm ticketId={params.ticketId} />
                 </div>
-
-                {/* Support Specialist */}
                 {
                     ticket.expand.support &&
                     <div className="">

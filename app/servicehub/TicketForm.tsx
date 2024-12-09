@@ -319,40 +319,9 @@ export default function TicketForm() {
                       )}
                     />
                     <p className="text-sm text-gray-500">Include what you did before the problem appeared, what you have tried already, and anything else you think would be useful</p>
-                    <div className="border rounded-md">
+                    
                     <FileInput onChange={onFileInputChange} label="Add Images" multiple={true} accept="image/*" />
-                </div>
-
-                    {/* <FormField
-                      control={form.control}
-                      name="attachments"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Upload document (optional)</FormLabel>
-                          <FormControl>
-                            <FileInput
-                              onChange={(newFiles) => {
-                                field.onChange(newFiles);
-                              }}
-                              label="Upload attachments"
-                              multiple
-                              accept=".pdf,.doc,.docx,image/*"
-                            />
-                          </FormControl>
-                          {field.value && field.value.length > 0 && (
-                            <div className="mt-2 flex flex-wrap gap-2">
-                              {field.value.map((file, index) => (
-                                <div
-                                  key={index}
-                                  className="flex items-center bg-gray-100 p-2 rounded"
-                                >
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </FormItem>
-                      )}
-                    /> */}
+                
                   </>
                 </div>
                 <div className={currentStep === 3 ? "" : "hidden"}>
@@ -399,8 +368,10 @@ export default function TicketForm() {
                 className="w-48 sm:w-56 md:w-64 lg:w-72 max-w-full h-auto animate-zoom"
               />
             </div>
+            <div className="space-y-4">
             <ArticleCardSkeleton />
             <p className="text-gray-500 mt-4 text-center">More articles coming soon...</p>
+            </div>
           </div>
         </div>
 

@@ -92,14 +92,10 @@ export default function CommentForm({ ticketId }: CommentFormProps) {
                         </FormItem>
                     )}
                 />
-
-                <div className="border rounded-md">
-                    <FileInput onChange={onFileInputChange} label="Add Images" multiple={true} accept="image/*" />
-                </div>
-
-                <div className="flex justify-end gap-2">
-                    <Button disabled={working} size="sm" type="submit">{working ? "Working..." : "Submit"}</Button>
-                </div>
+                <FileInput onChange={onFileInputChange} label="Add Images" multiple={true} accept="image/*" />
+                <Button disabled={working} type="submit" className="w-full">
+                        {working ? "Submitting..." : "Submit Comment"}
+                    </Button>                
             </form>
         </Form>
     )

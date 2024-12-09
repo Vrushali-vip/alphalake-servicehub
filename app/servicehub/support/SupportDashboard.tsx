@@ -46,6 +46,8 @@ export default async function SupportDashboard({
   const unassignedTickets: TicketListItemForSupport[] = [];
   const assignedTickets: TicketListItemForSupport[] = [];
 
+  console.log(data.tickets);
+
   data.tickets.forEach((ticket) => {
     if (ticket.expand?.support?.id === session?.user.id) {
       assignedTickets.push(ticket);

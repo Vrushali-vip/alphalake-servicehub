@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
-
 import FileInput from "@/components/custom/FileInput";
 import { useState } from "react";
 import { clientRevalidate } from "../../action";
@@ -75,7 +74,7 @@ export default function CommentForm({ ticketId }: CommentFormProps) {
                             </FormItem>
                         )}
                     />
-                    <FileInput onChange={setFiles} label="Upload Attachments" multiple accept="image/*" />
+                    <FileInput onChange={setFiles} label="Upload Attachments" multiple={true} accept="image/*" />
                     <Button disabled={working} type="submit" className="w-full">
                         {working ? "Submitting..." : "Submit Comment"}
                     </Button>

@@ -16,9 +16,9 @@ export default async function TicketById({ params }: { params: { ticketId: strin
         }),
         pb.collection("ticket_comments").getFullList<TicketComment>({
             filter: `ticket.id="${params.ticketId}"`,
-            expand: "user",
-            fields: "id,ticket,user,content,created,attachments,expand,user.id,user.name",
-            sort: "-created",
+            expand: "user,created,updated",
+            fields: "id,ticket,user,content,created,attachments,expand,user.id,user.name,expand.created.id,expand.created.name,expand.updated.id,expand.updated.name",
+            // sort: "-created",
             $autoCancel: false
         }),
     ]);
@@ -27,9 +27,6 @@ export default async function TicketById({ params }: { params: { ticketId: strin
         <main className="min-h-screen p-4 lg:px-8">
             <div className="flex justify-between items-center mb-6 mr-2">
                 <GoBack />
-                {/* <Button>
-                    Mark ticket as resolved
-                </Button> */}
                 <MarkResolvedButton ticketId={params.ticketId} currentStatus={ticket.status} />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

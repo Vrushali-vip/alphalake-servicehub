@@ -14,10 +14,9 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -55,22 +54,17 @@ export default function LoginForm() {
                 title: "Success",
                 description: "Logged in"
             })
-            router.refresh();
-            if(process.env.NODE_ENV === "production") {
-                window.location.reload();
+            console.log(res);
+            const url = new URL(res?.url || "");
+            if(url.searchParams.get("callbackUrl")) {
+                router.push(url.searchParams.get("callbackUrl") || "/");
+                return;
             }
+
+            router.push("/");
         }
     }
     
-    const session = useSession();
-    useEffect(() => {
-        if(session.data?.user) {
-            console.log("logged in");
-            
-            const url = new URL(window.location.href);
-            router.push(url.searchParams.get("callbackUrl") || "/servicehub");
-        }
-    }, [session.data?.user, router]);
 
     return (
         <Form {...form}>

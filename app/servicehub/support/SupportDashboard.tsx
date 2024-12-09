@@ -2,11 +2,11 @@ import SupportDashboardGrid from "./SupportDashboardGrid";
 import { TicketListItemForSupport, UserListItem } from "../types";
 import { SupportPageSearchParams } from "./page";
 import pb from "@/lib/pocketbase";
-import { getServerSession } from "next-auth";
-import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
+
 
 type SupportDashboardProps = {
   searchParams: SupportPageSearchParams;
+  userId?: string
 };
 
 export async function fetchSupportData(searchParams?: SupportPageSearchParams) {
@@ -37,19 +37,16 @@ export async function fetchSupportData(searchParams?: SupportPageSearchParams) {
 }
 
 export default async function SupportDashboard({
-
+  userId
 }: SupportDashboardProps) {
 
   const data = await fetchSupportData();
-  const session = await getServerSession(authOptions);
 
   const unassignedTickets: TicketListItemForSupport[] = [];
   const assignedTickets: TicketListItemForSupport[] = [];
 
-  // console.log(data.tickets);
-
   data.tickets.forEach((ticket) => {
-    if (ticket.expand?.support?.id === session?.user.id) {
+    if (ticket.expand?.support?.id === userId) {
       assignedTickets.push(ticket);
     } else {
       unassignedTickets.push(ticket);

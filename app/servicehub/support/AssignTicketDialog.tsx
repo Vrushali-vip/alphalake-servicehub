@@ -44,12 +44,10 @@ export default function AssignTicketDialog({
       await pb.collection("tickets").update(ticketId, {
         support: userId,
       });
-      // Use toast to display success message
       toast({ title: "Ticket assigned successfully!", description: "" });
       setOpen(false);
     } catch (error) {
       console.error("Error assigning ticket:", error);
-      // Use toast to display error message
       toast({ title: "Failed to assign ticket.", description: "Please try again.", variant: "destructive" });
     } finally {
       setLoading(false);

@@ -56,12 +56,12 @@ export default function LoginForm() {
             })
             console.log(res);
             const url = new URL(res?.url || "");
-            if(url.searchParams.get("callbackUrl")) {
-                router.push(url.searchParams.get("callbackUrl") || "/");
-                return;
+            const callbackUrl = url.searchParams.get("callbackUrl");
+            if(callbackUrl) {
+                window.location.replace(callbackUrl);
+            } else{
+                window.location.replace("/servicehub");
             }
-
-            router.push("/");
         }
     }
     

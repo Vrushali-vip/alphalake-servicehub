@@ -44,7 +44,11 @@ export type TicketComment = {
         },
     } 
 }
-
+export type UserListItem = {
+    id: string;
+    name: string;
+    role: UserRole;
+}
 export type UserRole = "ADMIN" | "SUPPORT" | "CUSTOMER";
 
 declare module "next-auth" {
@@ -59,11 +63,7 @@ declare module "next-auth" {
     }
 }
 
-export type UserListItem = {
-    id: string;
-    name: string;
-    role: UserRole;
-}
+
 
 export type UserListItemForAdmin = {
     id: string;

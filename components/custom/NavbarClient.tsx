@@ -49,90 +49,100 @@
 //     )
 // }
 
+
 "use client";
 import { Button } from "../ui/button";
 import { UserCircle, ChevronDown } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { signOut, useSession } from "next-auth/react"
+} from "@/components/ui/dropdown-menu";
+import { signOut, useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
-const countries = [
-    { code: 'ind', name: 'India', flag: '/ind_flag.png', route: '/ind' },
-    { code: 'uk', name: 'UK', flag: '/uk_flag.jpg', route: '/uk' }
+interface Country {
+    code: string;
+    name: string;
+    flag: string;
+}
+
+const countries: Country[] = [
+    { code: "ind", name: "INDIA", flag: "/ind_flag.png" },
+    { code: "uk", name: "UK", flag: "/uk_flag.jpg" },
 ];
 
 export default function NavbarClient() {
-    const router = useRouter();
     const session = useSession();
     const { toast } = useToast();
 
-    function onLogOutClick() {
+    const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]); 
+
+    const handleCountrySelect = (country: Country) => {
+        setSelectedCountry(country); 
+    };
+
+    const onLogOutClick = () => {
         signOut();
         toast({
             title: "Logged out",
-            description: "You have been logged out."
-        })
-    }
-
-    function handleCountrySelect(country: { code?: string; name?: string; flag?: string; route: any; }) {
-        router.push(country.route);
-    }
+            description: "You have been logged out.",
+        });
+    };
 
     return (
         <div className="flex items-center gap-2">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm" className="flex items-center gap-2">
-                        <Image 
-                            src={countries[0].flag} 
-                            width={24} 
-                            height={24} 
-                            className="rounded-full object-cover object-center" 
+                        <Image
+                            src={selectedCountry.flag}
+                            alt={selectedCountry.name}
+                            width={24}
+                            height={24}
+                            className="rounded-full object-cover object-center"
                             style={{
                                 borderRadius: '50%', 
                                 aspectRatio: '1/1', 
                                 width: '24px', 
                                 height: '24px'
                             }}
-                            alt={countries[0].name} 
                         />
-                        {countries[0].name}
+                        {selectedCountry.name}
                         <ChevronDown size={16} />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                     {countries.map((country) => (
-                        <div 
-                            key={country.code} 
+                        <DropdownMenuItem
+                            key={country.code}
                             onClick={() => handleCountrySelect(country)}
-                            className="flex items-center gap-2 cursor-pointer px-2 py-1.5 text-sm hover:bg-accent"
+                            className="flex items-center gap-2 cursor-pointer"
                         >
-                            <Image 
-                                src={country.flag} 
-                                width={24} 
-                                height={24} 
-                                className="rounded-full object-cover object-center" 
-                                style={{
-                                    borderRadius: '50%', 
-                                    aspectRatio: '1/1', 
-                                    width: '24px', 
-                                    height: '24px'
-                                }}
-                                alt={country.name} 
+                            <Image
+                                src={country.flag}
+                                alt={country.name}
+                                width={24}
+                                height={24}
+                                className="rounded-full object-cover object-center"
+                            style={{
+                                borderRadius: '50%', 
+                                aspectRatio: '1/1', 
+                                width: '24px', 
+                                height: '24px'
+                            }}
                             />
                             {country.name}
-                        </div>
+                        </DropdownMenuItem>
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* User Account Dropdown */}
             {session?.data?.user ? (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -141,20 +151,14 @@ export default function NavbarClient() {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <div className="px-2 py-1.5 text-sm">My Account</div>
-                        <div className="h-[1px] bg-border my-1"></div>
-                        <div 
-                            className="px-2 py-1.5 text-sm cursor-pointer hover:bg-accent text-muted-foreground"
-                            onClick={() => {}}
-                        >
-                            Profile
-                        </div>
-                        <div 
-                            className="px-2 py-1.5 text-sm cursor-pointer hover:bg-accent text-destructive"
-                            onClick={onLogOutClick}
-                        >
-                            Log Out
-                        </div>
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem disabled>Profile</DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                            <button className="w-full cursor-pointer" onClick={onLogOutClick}>
+                                Log Out
+                            </button>
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             ) : (
@@ -163,5 +167,5 @@ export default function NavbarClient() {
                 </Button>
             )}
         </div>
-    )
+    );
 }

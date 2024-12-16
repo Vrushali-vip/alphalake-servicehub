@@ -129,7 +129,7 @@ export default function NavbarClient() {
                                 alt={country.name}
                                 width={24}
                                 height={24}
-                                className="rounded-full object-cover object-center"
+                                className="rounded-full object-cover object-center "
                             style={{
                                 borderRadius: '50%', 
                                 aspectRatio: '1/1', 

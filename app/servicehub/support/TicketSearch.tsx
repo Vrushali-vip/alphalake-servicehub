@@ -52,7 +52,7 @@ const TicketSearch = ({
 
         </SelectContent>
       </Select>
-
+{/* 
       <Select>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Customer" />
@@ -60,7 +60,7 @@ const TicketSearch = ({
         <SelectContent>
           <SelectItem value="ALL">Select customer</SelectItem>
         </SelectContent>
-      </Select>
+      </Select> */}
 
       {/* Clear Filters Button */}
       <Button

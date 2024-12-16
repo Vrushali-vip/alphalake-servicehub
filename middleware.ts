@@ -1,4 +1,3 @@
-// import { withAuth } from 'next-auth/middleware';
 import { getToken } from 'next-auth/jwt';
 
 // export default withAuth({
@@ -44,7 +43,6 @@ import type { NextRequest } from 'next/server'
 export async function middleware(request: NextRequest) {
 
   const token = await getToken({ req: request })
-  // console.log(token);
   const path = request.nextUrl.pathname;
   
   if(token) {
@@ -68,7 +66,7 @@ export async function middleware(request: NextRequest) {
     }
 
     if(role === "CUSTOMER") {
-      if(path === "/servicehub") return NextResponse.next();
+      if(path.startsWith("/servicehub")) return NextResponse.next();
 
       return NextResponse.redirect(new URL("/servicehub", request.url))
     }

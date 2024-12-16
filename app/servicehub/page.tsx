@@ -101,7 +101,6 @@ import TicketGrid from "./TicketGrid";
 import TicketSkeleton from "@/components/custom/TicketSkeleton";
 import authOptions from "../api/auth/[...nextauth]/authOptions";
 import { Suspense } from "react";
-import { redirect } from "next/navigation";
 
 export type Filters = {
   status?: string;
@@ -117,13 +116,13 @@ export default async function ServiceHub({
   searchParams: Filters;
 }) {
   const session = await getServerSession(authOptions);
-    // console.log(session?.user);
-    if (session?.user.role === "ADMIN"){
-        redirect("/servicehub/admin");
-    }
-    if (session?.user.role === "SUPPORT"){
-        redirect("/servicehub/support");
-    }
+    // // console.log(session?.user);
+    // if (session?.user.role === "ADMIN"){
+    //     redirect("/servicehub/admin");
+    // }
+    // if (session?.user.role === "SUPPORT"){
+    //     redirect("/servicehub/support");
+    // }
 
   return (
     <main className="min-h-screen">

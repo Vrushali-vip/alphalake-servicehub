@@ -52,8 +52,8 @@ const TicketSearch = ({
 
         </SelectContent>
       </Select>
-{/* 
-      <Select>
+
+      {/* <Select>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Customer" />
           </SelectTrigger>

@@ -76,7 +76,11 @@ export async function middleware(request: NextRequest) {
     }
 
     if(role === "SUPPORT") {
-      
+      return NextResponse.redirect(new URL("/servicehub/support", request.url))
+    }
+
+    if(role === "CUSTOMER") {
+      return NextResponse.redirect(new URL("/servicehub", request.url))
     }
 
     // if(token?.role === 'ADMIN') {

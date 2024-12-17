@@ -84,7 +84,7 @@ export default function CommentForm({ ticketId }: CommentFormProps) {
                     name="content"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Comment</FormLabel>
+                            <FormLabel></FormLabel>
                             <FormControl>
                                 <Textarea placeholder="Type a comment" {...field} />
                             </FormControl>

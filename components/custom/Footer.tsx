@@ -6,7 +6,7 @@ import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } f
 
 export default function Footer() {
     return (
-        <footer className="border-t">
+        <footer>
             <div className="mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
                 <div className="flex justify-center">
                     <Image src="/logo-light.png" width={300} height={100} className="dark:hidden" alt="Alphalake Services" />

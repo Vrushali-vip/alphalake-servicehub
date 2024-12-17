@@ -85,7 +85,7 @@ export default function TicketSearchFilter() {
           <Label className="text-md font-medium mb-1">Title</Label>
           <Input
             type="text"
-            className="w-full border border-gray-600 rounded-md p-2"
+            className="w-full border rounded-md p-2"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="Search by title"
@@ -103,12 +103,12 @@ export default function TicketSearchFilter() {
             value={status || undefined}
             onValueChange={(value) => setStatus(value)}
           >
-            <SelectTrigger className="w-full border border-gray-600 rounded-md p-2">
+            <SelectTrigger className="w-full border rounded-md p-2 text-gray-400">
               <SelectValue placeholder="Select status" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Ticket Status</SelectLabel>
+                <SelectLabel></SelectLabel>
                 <SelectItem value="OPEN">Open</SelectItem>
                 <SelectItem value="PROGRESS">In Progress</SelectItem>
                 <SelectItem value="CLOSED">Closed</SelectItem>

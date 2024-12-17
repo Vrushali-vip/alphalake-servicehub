@@ -49,7 +49,7 @@ export default function Home() {
     <main>
       <section className="flex min-h-screen flex-col justify-between">
         <div className="p-4 md:p-8 lg:p-12 xl:p-16 mx-auto my-auto gap-y-8 justify-between align-center flex flex-col-reverse lg:flex-row">
-          <div className="lg:w-2/3 pt-8">
+          <div className="w-full max-w-4xl pt-8">
             <h1 className="text-3xl xl:text-5xl font-extrabold mb-6">
               Transform Your Business with Alphalake&apos;s AI-powered Solutions
             </h1>
@@ -71,16 +71,43 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* <section className="min-h-screen p-4 md:p-8 lg:p-12 xl:p-16 bg-bland">
-        <h2 className="text-2xl xl:text-4xl my-4 text-center font-extrabold">Services Overview</h2>
+      <section className="p-4 md:p-8 lg:p-12 xl:p-16 bg-al-1000">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl xl:text-3xl my-4 text-center font-bold">
+            Customer Success
+          </h2>
+          <p className="text-center text-xl">
+            (Through value/impact obsession)
+          </p>
 
-        <div className="my-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            <div className="grid items-center justify-center border rounded-md min-h-48">Some Content</div>
-            <div className="grid items-center justify-center border rounded-md min-h-48">Some Content</div>
-            <div className="grid items-center justify-center border rounded-md min-h-48">Some Content</div>
-            <div className="grid items-center justify-center border rounded-md min-h-48">Some Content</div>
+          <div className="my-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid items-center justify-center">
+              <Image src="/nhs_white.png" width={200} height={200} className="mx-auto" alt="NHS" />
+              <p className="text-sm pt-2 text-center">
+                Automating repetitive tasks for administering patients across a large NHS teaching hospitals.
+              </p>
+            </div>
+            <div className="grid items-center justify-center">
+              <Image src="/xpo_white.png" width={200} height={200} className="mx-auto" alt="XPO Logistics" />
+              <p className="text-sm pt-2 text-center">
+                Automating customs import processes for one of the world&apos;s largest logistics companies.
+              </p>
+            </div>
+            <div className="grid items-center justify-center">
+              <Image src="/allcare_white.png" width={200} height={200} className="mx-auto" alt="Allcare Pharmaceuticals" />
+              <p className="text-sm pt-2 text-center">
+                Cara / Allcare Pharmacy: Automating complex drug invoicing to Care Home customers for Ireland&apos;s pharmacy group
+              </p>
+            </div>
+            <div className="grid items-center justify-center">
+              <Image src="/alphabot_white.png" width={200} height={200} className="mx-auto" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
+          </div>
         </div>
-      </section> */}
+      </section>
       
 
     </main>

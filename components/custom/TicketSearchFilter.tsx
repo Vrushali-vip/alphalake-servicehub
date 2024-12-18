@@ -67,57 +67,111 @@ export default function TicketSearchFilter() {
   const hasActiveFilters = status || keyword || dateRange?.from || dateRange?.to;
 
   return (
-    <div className="rounded-lg p-6 text-white">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold">Filter Tickets</h2>
-        {hasActiveFilters && (
-          <Button
-            onClick={clearFilters}
-            className="text-white border-gray-600 hover:bg-gray-700"
-          >
-            Clear Filters
-          </Button>
-        )}
-      </div>
+    // <div className="rounded-lg mb-4 text-white">
+    //   <div className="flex items-center justify-between mb-4">
+    //     <h2 className="text-lg font-semibold">Filter Tickets</h2>
+    //     {hasActiveFilters && (
+    //       <Button
+    //         onClick={clearFilters}
+    //         className="text-white border-gray-600 hover:bg-gray-700"
+    //       >
+    //         Clear Filters
+    //       </Button>
+    //     )}
+    //   </div>
 
-      <div className="flex items-center gap-3">
-        <div className="flex flex-col" style={{ flex: "0 0 50%" }}>
-          <Label className="text-md font-medium mb-1">Title</Label>
-          <Input
-            type="text"
-            className="w-full border rounded-md p-2"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            placeholder="Search by title"
-          />
-        </div>
+    //   <div className="flex items-center gap-3">
+    //     <div className="flex flex-col" style={{ flex: "0 0 50%" }}>
+    //       <Label className="text-md font-medium mb-1">Title</Label>
+    //       <Input
+    //         type="text"
+    //         className="w-full border rounded-md p-2"
+    //         value={keyword}
+    //         onChange={(e) => setKeyword(e.target.value)}
+    //         placeholder="Search by title"
+    //       />
+    //     </div>
 
-        <div className="flex flex-col flex-1">
-          <Label className="text-md font-medium mb-1">Date Range</Label>
-          <DatePickerWithRange date={dateRange} setDate={setDateRange} />
-        </div>
+    //     <div className="flex flex-col flex-1">
+    //       <Label className="text-md font-medium mb-1">Date Range</Label>
+    //       <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+    //     </div>
 
-        <div className="flex flex-col flex-1">
-          <Label className="text-md font-medium mb-1">Status</Label>
-          <Select
-            value={status || undefined}
-            onValueChange={(value) => setStatus(value)}
-          >
-            <SelectTrigger className="w-full border rounded-md p-2 text-gray-400">
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel></SelectLabel>
-                <SelectItem value="OPEN">Open</SelectItem>
-                <SelectItem value="PROGRESS">In Progress</SelectItem>
-                <SelectItem value="CLOSED">Closed</SelectItem>
-                <SelectItem value="RESOLVED">Resolved</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+    //     <div className="flex flex-col flex-1">
+    //       <Label className="text-md font-medium mb-1">Status</Label>
+    //       <Select
+    //         value={status || undefined}
+    //         onValueChange={(value) => setStatus(value)}
+    //       >
+    //         <SelectTrigger className="w-full border rounded-md p-2 text-gray-400">
+    //           <SelectValue placeholder="Select status" />
+    //         </SelectTrigger>
+    //         <SelectContent>
+    //           <SelectGroup>
+    //             <SelectLabel></SelectLabel>
+    //             <SelectItem value="OPEN">Open</SelectItem>
+    //             <SelectItem value="PROGRESS">In Progress</SelectItem>
+    //             <SelectItem value="CLOSED">Closed</SelectItem>
+    //             <SelectItem value="RESOLVED">Resolved</SelectItem>
+    //           </SelectGroup>
+    //         </SelectContent>
+    //       </Select>
+    //     </div>
+    //   </div>
+    // </div>
+    <div className="rounded-lg mb-4 text-white">
+  <div className="flex items-center justify-between mb-4">
+    <h2 className="text-lg font-semibold">Filter Tickets</h2>
+    {hasActiveFilters && (
+      <Button
+        onClick={clearFilters}
+        className="text-white border-gray-600"
+      >
+        Clear Filters
+      </Button>
+    )}
+  </div>
+
+  <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
+    <div className="flex flex-col sm:w-2/3">
+      <Label className="text-md font-medium mb-1">Title</Label>
+      <Input
+        type="text"
+        className="w-full border rounded-md p-2"
+        value={keyword}
+        onChange={(e) => setKeyword(e.target.value)}
+        placeholder="Search by title"
+      />
     </div>
+
+    <div className="flex flex-col sm:w-1/3 ">
+      <Label className="text-md font-medium mb-1">Date Range</Label>
+      <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+    </div>
+
+    <div className="flex flex-col sm:w-1/3">
+      <Label className="text-md font-medium mb-1">Status</Label>
+      <Select
+        value={status || undefined}
+        onValueChange={(value) => setStatus(value)}
+      >
+        <SelectTrigger className="w-full border rounded-md p-2 text-gray-400">
+          <SelectValue placeholder="Select status" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel></SelectLabel>
+            <SelectItem value="OPEN">Open</SelectItem>
+            <SelectItem value="PROGRESS">In Progress</SelectItem>
+            <SelectItem value="CLOSED">Closed</SelectItem>
+            <SelectItem value="RESOLVED">Resolved</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+  </div>
+</div>
+
+
   );
 }

@@ -10,7 +10,7 @@ export default async function SupportPage({ searchParams }: { searchParams: Supp
     const session = await getServerSession(authOptions);
 
     return (
-        <div className="p-4">
+        <div className="p-6">
             <h1 className="text-2xl font-bold mb-6">Servicehub Response Team Dashboard</h1>
             <Suspense fallback={<div>Loading...</div>}>
                 <SupportDashboard searchParams={searchParams} userId={session?.user?.id} />

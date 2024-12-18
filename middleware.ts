@@ -65,10 +65,16 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/servicehub/support", request.url))
     }
 
-    if(role === "CUSTOMER") {
-      if(path.startsWith("/servicehub")) return NextResponse.next();
+    if (role === "CUSTOMER") {
+      if (path.startsWith("/servicehub/admin") || path.startsWith("/servicehub/support")) {
+        return NextResponse.redirect(new URL("/servicehub", request.url)); 
+      }
 
-      return NextResponse.redirect(new URL("/servicehub", request.url))
+      if (path.startsWith("/servicehub")) {
+        return NextResponse.next();
+      }
+    
+      return NextResponse.redirect(new URL("/servicehub", request.url));
     }
 
     if(role === "ADMIN") {

@@ -18,6 +18,7 @@ export type Ticket = TicketListItem & {
             avatar: string;
         },
         support?: {
+            description: ReactNode;
             id: string;
             name: string;
             role: string;
@@ -37,6 +38,7 @@ export type TicketComment = {
     attachments: string[];  
     expand: {
         user: {
+            sub: ReactNode;
             role: ReactNode;
             avatar: string;
             id: string;
@@ -54,6 +56,8 @@ export type UserRole = "ADMIN" | "SUPPORT" | "CUSTOMER";
 declare module "next-auth" {
     interface Session {
         user: {
+            image: string;
+            avatar: string;
             name?: string;
             id: string;
             sub?: string;

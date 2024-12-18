@@ -113,7 +113,18 @@ export default async function TicketGrid({
         <p className="text-muted-foreground line-clamp-1">{t.description}</p>
         <div className="flex items-center justify-between mt-2">
           <span className="text-xs">
-            {new Date(t.created).toLocaleString()}
+          {new Date(t.created)
+                  .toLocaleString("en-US", {
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })
+                  .replace(/,/g, "") 
+                  .replace("am", "AM")
+                  .replace("pm", "PM")}
           </span>
           <span
             className={`text-xs border rounded-md px-2 py-1 status-${t.status}`}

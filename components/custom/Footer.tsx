@@ -127,7 +127,7 @@ export default function Footer() {
                 </div>
             </div> */}
 
-      <div className="mx-auto max-w-5xl py-12 px-4 overflow-hidden sm:px-6 lg:px-8 max-w-screen-xl">
+      <div className="mx-auto max-w-5xl py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
         <div className="flex justify-center">
           <Image
             src="/logo-light.png"

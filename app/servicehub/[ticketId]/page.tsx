@@ -306,7 +306,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                     </p>
                   </div>
                 </div>
-                <p className="mt-2 whitespace-pre-wrap text-sm">
+                <p className="mt-6 whitespace-pre-wrap text-sm">
                   {comment.content}
                 </p>
               </div>

@@ -1,156 +1,3 @@
-// "use client";
-
-// import { TicketListItemForSupport, UserListItem } from "../types";
-// import { Button } from "@/components/ui/button";
-// import Link from "next/link";
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import AssignTicketDialog from "./AssignTicketDialog";
-// import { useState, useEffect } from "react";
-// import TicketSearch from "./TicketSearch";
-
-// type SupportDashboardGridProps = {
-//   supportUsers: UserListItem[];
-//   assignedTickets: TicketListItemForSupport[];
-//   unassignedTickets: TicketListItemForSupport[];
-// };
-
-// export default function SupportDashboardGrid({
-//   supportUsers,
-//   assignedTickets,
-//   unassignedTickets,
-// }: SupportDashboardGridProps) {
-// const formatDate = (date: Date) => {
-//   return new Date(date).toLocaleString("en-GB", {
-//     day: "2-digit",
-//     month: "2-digit",
-//     year: "numeric",
-//     hour: "2-digit",
-//     minute: "2-digit",
-//     hour12: true,
-//   });
-//   };
-
-//   const [selectedTicketIdToAssign, setSelectedTicketIdToAssign] = useState<string | undefined>(undefined);
-//   const [nameFilter, setNameFilter] = useState<string>("");
-//   const [statusFilter, setStatusFilter] = useState<string>("ALL");
-//   const [filteredAssignedTickets, setFilteredAssignedTickets] = useState<TicketListItemForSupport[]>(assignedTickets);
-//   const [filteredUnassignedTickets, setFilteredUnassignedTickets] = useState<TicketListItemForSupport[]>(unassignedTickets);
-
-//   function handleAssignDialogOpenChange(open: boolean) {
-//     if (!open) {
-//       setSelectedTicketIdToAssign(undefined);
-//     }
-//   }
-
-//   const clearFilters = () => {
-//     setNameFilter("");
-//     setStatusFilter("ALL");
-//   };
-
-//   useEffect(() => {
-//     const filterTickets = (tickets: TicketListItemForSupport[]) => {
-//       return tickets.filter((ticket) => {
-//         const nameMatch = ticket.title.toLowerCase().includes(nameFilter.toLowerCase());
-//         const statusMatch = statusFilter === "ALL" || ticket.status === statusFilter;
-//         return nameMatch && statusMatch;
-//       });
-//     };
-
-//     setFilteredAssignedTickets(filterTickets(assignedTickets));
-//     setFilteredUnassignedTickets(filterTickets(unassignedTickets));
-//   }, [nameFilter, statusFilter, assignedTickets, unassignedTickets]);
-
-//   return (
-//     <>
-//       <div className="">
-//         <TicketSearch
-//           nameFilter={nameFilter}
-//           setNameFilter={setNameFilter}
-//           statusFilter={statusFilter}
-//           setStatusFilter={setStatusFilter}
-//           clearFilters={clearFilters}
-//         />
-//       </div>
-
-//       <Tabs defaultValue="assigned" className="w-full">
-//         <div className="flex justify-center">
-//           <TabsList>
-//             <TabsTrigger
-//               value="assigned"
-//               className="px-4 py-2 bg-primary text-white rounded-md"
-//             >
-//               Assigned Tickets
-//             </TabsTrigger>
-//             <TabsTrigger
-//               value="unassigned"
-//               className="px-4 py-2 bg-primary text-white rounded-md"
-//             >
-//               Unassigned Tickets
-//             </TabsTrigger>
-//           </TabsList>
-//         </div>
-
-//         <TabsContent value="assigned" className="grid grid-cols-3 gap-2">
-//           {filteredAssignedTickets.map((ticket) => (
-//             <div key={ticket.id} className="hover:shadow-lg transition-shadow relative">
-//               <div className="p-4 border rounded-lg shadow-sm">
-//                 <h1 className="text-xl font-semibold">
-//                   {ticket.title.split(" ").slice(0, 5).join(" ")}
-//                 </h1>
-//                 <p>Status: {ticket.status}</p>
-//                 <p>Customer: {ticket.expand?.customer?.name || "Unknown"}</p>
-//                 <p>Created: {formatDate(ticket.created)}</p>
-//                 <div className="space-x-2">
-//                   <Button onClick={() => setSelectedTicketIdToAssign(ticket.id)} variant="outline" size="sm">
-//                     Assign Ticket
-//                   </Button>
-//                   <Link href={`/servicehub/support/${ticket.id}`}>
-//                     <Button className="mt-2" size="sm">
-//                       View Ticket
-//                     </Button>
-//                   </Link>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </TabsContent>
-
-//         <TabsContent value="unassigned" className="grid grid-cols-3 gap-2">
-//           {filteredUnassignedTickets.map((ticket) => (
-//             <div key={ticket.id} className="hover:shadow-lg transition-shadow relative">
-//               <div className="p-4 border rounded-lg shadow-sm">
-//                 <h1 className="text-xl font-semibold">
-//                   {ticket.title.split(" ").slice(0, 5).join(" ")}
-//                 </h1>
-//                 <p>Status: {ticket.status}</p>
-//                 <p>Customer: {ticket.expand?.customer?.name || "Unknown"}</p>
-//                 <p>Created: {formatDate(ticket.created)}</p>
-//                 <div className="space-x-2">
-//                   <Button onClick={() => setSelectedTicketIdToAssign(ticket.id)} variant="outline" size="sm">
-//                     Assign Ticket
-//                   </Button>
-//                   <Link href={`/servicehub/support/${ticket.id}`}>
-//                     <Button className="mt-2" size="sm">
-//                       View Ticket
-//                     </Button>
-//                   </Link>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </TabsContent>
-//       </Tabs>
-
-//       <AssignTicketDialog
-//         supportUsers={supportUsers}
-//         ticketId={selectedTicketIdToAssign}
-//         open={Boolean(selectedTicketIdToAssign)}
-//         setOpen={handleAssignDialogOpenChange}
-//       />
-//     </>
-//   );
-// }
-
 
 "use client";
 
@@ -162,6 +9,7 @@ import AssignTicketDialog from "./AssignTicketDialog";
 import { useState, useEffect } from "react";
 import TicketSearch from "./TicketSearch";
 import { useSearchParams, useRouter } from "next/navigation";
+import { DateRange } from "react-day-picker";
 
 type SupportDashboardGridProps = {
   supportUsers: UserListItem[];
@@ -183,7 +31,7 @@ export default function SupportDashboardGrid({
       minute: "2-digit",
       hour12: true,
     });
-  }
+  };
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -192,15 +40,13 @@ export default function SupportDashboardGrid({
   const [statusFilter, setStatusFilter] = useState<string>(searchParams.get("status") || "ALL");
   const [periodFilter, setPeriodFilter] = useState<string>(searchParams.get("period") || "ALL");
   const [customerFilter, setCustomerFilter] = useState<string>(searchParams.get("customer") || "ALL");
+  const [selectedDateRange, setSelectedDateRange] = useState<DateRange | undefined>(undefined);
   const [filteredAssignedTickets, setFilteredAssignedTickets] = useState<TicketListItemForSupport[]>(assignedTickets);
   const [filteredUnassignedTickets, setFilteredUnassignedTickets] = useState<TicketListItemForSupport[]>(unassignedTickets);
 
   const allCustomers = Array.from(
     new Map(
-      [
-        ...assignedTickets,
-        ...unassignedTickets,
-      ].map((ticket) => [
+      [...assignedTickets, ...unassignedTickets].map((ticket) => [
         ticket.expand?.customer?.id || "unknown",
         { id: ticket.expand?.customer?.id || "unknown", name: ticket.expand?.customer?.name || "Unknown" },
       ])
@@ -218,6 +64,7 @@ export default function SupportDashboardGrid({
     setStatusFilter("ALL");
     setCustomerFilter("ALL");
     setPeriodFilter("ALL");
+    setSelectedDateRange(undefined);
     updateURLParams({ name: "", status: "ALL", customer: "ALL", period: "ALL" });
   };
 
@@ -231,8 +78,6 @@ export default function SupportDashboardGrid({
   };
 
   const filterByPeriod = (ticketDate: string | Date) => {
-    if (periodFilter === "ALL") return true;
-
     const currentDate = new Date();
     const ticketCreatedDate = new Date(ticketDate);
 
@@ -240,16 +85,63 @@ export default function SupportDashboardGrid({
     const ticketTimestamp = ticketCreatedDate.getTime();
 
     switch (periodFilter) {
-      case "15_days":
-        return currentTimestamp - ticketTimestamp <= 15 * 24 * 60 * 60 * 1000; 
-      case "30_days":
-        return currentTimestamp - ticketTimestamp <= 30 * 24 * 60 * 60 * 1000; 
-      case "3_months":
-        return currentTimestamp - ticketTimestamp <= 90 * 24 * 60 * 60 * 1000; 
-      case "6_months":
-        return currentTimestamp - ticketTimestamp <= 180 * 24 * 60 * 60 * 1000; 
-      case "1_year":
-        return currentTimestamp - ticketTimestamp <= 365 * 24 * 60 * 60 * 1000; 
+      case "this-week": {
+        const currentDay = new Date(currentTimestamp).getDay(); // 0 (Sunday) to 6 (Saturday)
+        const startOfWeekTimestamp = currentTimestamp - currentDay * 24 * 60 * 60 * 1000 + 1 * 24 * 60 * 60 * 1000; // Monday
+        const endOfWeekTimestamp = startOfWeekTimestamp + 6 * 24 * 60 * 60 * 1000 - 1; // Sunday
+        return ticketTimestamp >= startOfWeekTimestamp && ticketTimestamp <= endOfWeekTimestamp;
+      }
+    
+      case "last-week": {
+        const currentDay = new Date(currentTimestamp).getDay(); // 0 (Sunday) to 6 (Saturday)
+        const endOfLastWeekTimestamp = currentTimestamp - currentDay * 24 * 60 * 60 * 1000 - 1; // Last week's Sunday
+        const startOfLastWeekTimestamp = endOfLastWeekTimestamp - 6 * 24 * 60 * 60 * 1000 + 1; // Last week's Monday
+        return (
+          ticketTimestamp >= startOfLastWeekTimestamp &&
+          ticketTimestamp <= endOfLastWeekTimestamp
+        );
+      }
+    
+      case "this-month": {
+        const currentDate = new Date(currentTimestamp);
+        const startOfMonthTimestamp = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime();
+        const endOfMonthTimestamp = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59, 999).getTime();
+        return ticketTimestamp >= startOfMonthTimestamp && ticketTimestamp <= endOfMonthTimestamp;
+      }
+    
+      case "last-month": {
+        const currentDate = new Date(currentTimestamp);
+        const startOfLastMonthTimestamp = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1).getTime();
+        const endOfLastMonthTimestamp = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0, 23, 59, 59, 999).getTime();
+        return (
+          ticketTimestamp >= startOfLastMonthTimestamp &&
+          ticketTimestamp <= endOfLastMonthTimestamp
+        );
+      }
+    
+      case "last-3-months": {
+        const threeMonthsAgoTimestamp = currentTimestamp - 3 * 30 * 24 * 60 * 60 * 1000; // Approximation: 3 months = 90 days
+        return ticketTimestamp >= threeMonthsAgoTimestamp;
+      }
+    
+      case "last-6-months": {
+        const sixMonthsAgoTimestamp = currentTimestamp - 6 * 30 * 24 * 60 * 60 * 1000; // Approximation: 6 months = 180 days
+        return ticketTimestamp >= sixMonthsAgoTimestamp;
+      }
+      case "last-year": {
+        const currentDate = new Date(currentTimestamp);
+        const startOfLastYearTimestamp = new Date(currentDate.getFullYear() - 1, 0, 1).getTime(); // January 1st of last year
+        const endOfLastYearTimestamp = new Date(currentDate.getFullYear() - 1, 11, 31, 23, 59, 59, 999).getTime(); // December 31st of last year
+        return (
+          ticketTimestamp >= startOfLastYearTimestamp &&
+          ticketTimestamp <= endOfLastYearTimestamp
+        );
+      }
+      case "date_range":
+        if (!selectedDateRange || !selectedDateRange.from || !selectedDateRange.to) return true;
+        return (
+          ticketCreatedDate >= selectedDateRange.from && ticketCreatedDate <= selectedDateRange.to
+        );
       default:
         return true;
     }
@@ -269,125 +161,35 @@ export default function SupportDashboardGrid({
 
     setFilteredAssignedTickets(filterTickets(assignedTickets));
     setFilteredUnassignedTickets(filterTickets(unassignedTickets));
-  }, [nameFilter, statusFilter, customerFilter, periodFilter, assignedTickets, unassignedTickets]);
+  }, [nameFilter, statusFilter, customerFilter, periodFilter, selectedDateRange, assignedTickets, unassignedTickets]);
 
   useEffect(() => {
     updateURLParams({ name: nameFilter, status: statusFilter, customer: customerFilter, period: periodFilter });
   }, [nameFilter, statusFilter, customerFilter, periodFilter]);
 
   return (
-    // <>
-    //   <div>
-    //     <TicketSearch
-    //       nameFilter={nameFilter}
-    //       setNameFilter={setNameFilter}
-    //       statusFilter={statusFilter}
-    //       setStatusFilter={setStatusFilter}
-    //       customerFilter={customerFilter}
-    //       setCustomerFilter={setCustomerFilter}
-    //       periodFilter={periodFilter}
-    //       setPeriodFilter={setPeriodFilter}
-    //       clearFilters={clearFilters}
-    //       customers={allCustomers}
-    //     />
-    //   </div>
+    <div className="container mx-auto px-4 max-w-7xl">
+      <div className="mb-6">
+        <TicketSearch
+          nameFilter={nameFilter}
+          setNameFilter={setNameFilter}
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+          customerFilter={customerFilter}
+          setCustomerFilter={setCustomerFilter}
+          periodFilter={periodFilter}
+          setPeriodFilter={setPeriodFilter}
+          selectedDateRange={selectedDateRange}
+          setSelectedDateRange={setSelectedDateRange}
+          clearFilters={clearFilters}
+          customers={allCustomers}
+        />
+      </div>
 
-    //   <Tabs defaultValue="assigned" className="w-full">
-    //     <div className="flex justify-center">
-    //       <TabsList>
-    //         <TabsTrigger
-    //           value="assigned"
-    //           className="px-4 py-2 bg-primary text-white rounded-md"
-    //         >
-    //           Assigned Tickets
-    //         </TabsTrigger>
-    //         <TabsTrigger
-    //           value="unassigned"
-    //           className="px-4 py-2 bg-primary text-white rounded-md"
-    //         >
-    //           Unassigned Tickets
-    //         </TabsTrigger>
-    //       </TabsList>
-    //     </div>
-
-    //     <TabsContent value="assigned" className="grid grid-cols-3 gap-2">
-    //       {filteredAssignedTickets.map((ticket) => (
-    //         <div key={ticket.id} className="hover:shadow-lg transition-shadow relative">
-    //           <div className="p-4 border rounded-lg shadow-sm">
-    //             <h1 className="text-xl font-semibold">
-    //               {ticket.title.split(" ").slice(0, 5).join(" ")}
-    //             </h1>
-    //             <p>Status: {ticket.status}</p>
-    //             <p>Customer: {ticket.expand?.customer?.name || "Unknown"}</p>
-    //             <p>Created: {formatDate(ticket.created)}</p>
-    //             <div className="space-x-2">
-    //               <Button onClick={() => setSelectedTicketIdToAssign(ticket.id)} variant="outline" size="sm">
-    //                 Assign Ticket
-    //               </Button>
-    //               <Link href={`/servicehub/support/${ticket.id}`}>
-    //                 <Button className="mt-2" size="sm">
-    //                   View Ticket
-    //                 </Button>
-    //               </Link>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       ))}
-    //     </TabsContent>
-
-    //     <TabsContent value="unassigned" className="grid grid-cols-3 gap-2">
-    //       {filteredUnassignedTickets.map((ticket) => (
-    //         <div key={ticket.id} className="hover:shadow-lg transition-shadow relative">
-    //           <div className="p-4 border rounded-lg shadow-sm">
-    //             <h1 className="text-xl font-semibold">
-    //               {ticket.title.split(" ").slice(0, 5).join(" ")}
-    //             </h1>
-    //             <p>Status: {ticket.status}</p>
-    //             <p>Customer: {ticket.expand?.customer?.name || "Unknown"}</p>
-    //             <p>Created: {formatDate(ticket.created)}</p>
-    //             <div className="space-x-2">
-    //               <Button onClick={() => setSelectedTicketIdToAssign(ticket.id)} variant="outline" size="sm">
-    //                 Assign Ticket
-    //               </Button>
-    //               <Link href={`/servicehub/support/${ticket.id}`}>
-    //                 <Button className="mt-2" size="sm">
-    //                   View Ticket
-    //                 </Button>
-    //               </Link>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       ))}
-    //     </TabsContent>
-    //   </Tabs>
-
-    //   <AssignTicketDialog
-    //     supportUsers={supportUsers}
-    //     ticketId={selectedTicketIdToAssign}
-    //     open={Boolean(selectedTicketIdToAssign)}
-    //     setOpen={handleAssignDialogOpenChange}
-    //   />
-    // </>
-    <>
-      <div className="container mx-auto px-4 max-w-7xl">
-        <div className="mb-6">
-          <TicketSearch
-            nameFilter={nameFilter}
-            setNameFilter={setNameFilter}
-            statusFilter={statusFilter}
-            setStatusFilter={setStatusFilter}
-            customerFilter={customerFilter}
-            setCustomerFilter={setCustomerFilter}
-            periodFilter={periodFilter}
-            setPeriodFilter={setPeriodFilter}
-            clearFilters={clearFilters}
-            customers={allCustomers}
-          />
-        </div>
-
-        <Tabs defaultValue="assigned" className="w-full">
+     
+      <Tabs defaultValue="assigned" className="w-full">
           <div className="flex justify-center mb-6">
-            <TabsList className="space-x-2">
+            <TabsList className="space-x-2 w-full bg-background">
               <TabsTrigger
                 value="assigned"
                 className="px-4 py-2 bg-primary text-white rounded-md"
@@ -405,11 +207,11 @@ export default function SupportDashboardGrid({
 
           <TabsContent
             value="assigned"
-            className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-0"
           >
             {filteredAssignedTickets.map((ticket) => (
               <div key={ticket.id} className="hover:shadow-lg transition-shadow">
-                <div className="p-4 border rounded-lg shadow-sm h-full">
+                <div className="p-4 bg-gray-800 shadow-sm h-full">
                   <h1 className="text-lg md:text-xl font-semibold mb-3 line-clamp-2">
                     {ticket.title.split(" ").slice(0, 3).join(" ")}
                   </h1>
@@ -446,11 +248,11 @@ export default function SupportDashboardGrid({
 
           <TabsContent
             value="unassigned"
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-0"
           >
             {filteredUnassignedTickets.map((ticket) => (
               <div key={ticket.id} className="hover:shadow-lg transition-shadow">
-                <div className="p-4 border rounded-lg shadow-sm h-full">
+                <div className="p-4 bg-gray-800 shadow-sm h-full">
                   <h1 className="text-lg md:text-xl font-semibold mb-3 line-clamp-2">
                     {ticket.title.split(" ").slice(0, 5).join(" ")}
                   </h1>
@@ -479,14 +281,13 @@ export default function SupportDashboardGrid({
             ))}
           </TabsContent>
         </Tabs>
-
-        <AssignTicketDialog
+      
+      <AssignTicketDialog
           supportUsers={supportUsers}
           ticketId={selectedTicketIdToAssign}
           open={Boolean(selectedTicketIdToAssign)}
           setOpen={handleAssignDialogOpenChange}
         />
-      </div>
-    </>
+    </div>
   );
 }

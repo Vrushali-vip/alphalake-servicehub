@@ -107,7 +107,7 @@ export default async function TicketGrid({
       <Link
         key={t.id}
         href={`/servicehub/${t.id}`}
-        className="border rounded p-4"
+        className="bg-gray-800 rounded p-4"
       >
         <h3>{t.title}</h3>
         <p className="text-muted-foreground line-clamp-1">{t.description}</p>

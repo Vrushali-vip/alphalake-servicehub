@@ -58,7 +58,6 @@ export default function CommentForm({ ticketId }: CommentFormProps) {
    
     return (
         <div className="mt-6">
-            <h2 className="text-lg font-semibold mb-4">Add a Comment</h2>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
@@ -66,7 +65,7 @@ export default function CommentForm({ ticketId }: CommentFormProps) {
                         name="content"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Comment</FormLabel>
+                                <FormLabel></FormLabel>
                                 <FormControl>
                                     <Textarea placeholder="Type your comment here..." {...field} />
                                 </FormControl>

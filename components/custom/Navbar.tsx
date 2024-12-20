@@ -106,11 +106,11 @@ export default async function Navbar() {
                                 </ul>
                             </div>
                         </div>
-                        <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/c relative pl-3 lg:pl-0">
+                        {/* <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/c relative pl-3 lg:pl-0">
                             <Link href="/servicehub" className="font-semibold hover:text-primary hover:cursor-pointer">
                                 Service Hub
                             </Link>
-                        </div>
+                        </div> */}
                         <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/t relative pl-3 lg:pl-0">
                             <div className="font-semibold group-hover/t:text-primary flex align-center gap-1 hover:cursor-pointer">
                                 <span>

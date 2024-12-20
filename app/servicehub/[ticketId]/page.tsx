@@ -1,8 +1,9 @@
-import pb from "@/lib/pocketbase";
+import pb, { getImageUrl } from "@/lib/pocketbase";
 import { Ticket, TicketComment } from "../types";
 import CommentForm from "./CommentForm";
 import ArticleCardSkeleton from "@/components/custom/ArticleCardSkeleton";
 import { MarkResolvedButton } from "@/components/custom/MarkResolvedButton";
+import FullScreenImage from "@/components/custom/FullScreenImage";
 
 
 export const revalidate = 0;
@@ -106,16 +107,16 @@ export default async function TicketById({ params }: { params: { ticketId: strin
     //                         </div>
 
     //                         <p className="mt-2">{comment.content}</p>
-    //                         {comment.attachments.length > 0 && (
-    //                             <div className="mt-3 grid grid-cols-2 md:grid-cols-3 gap-3">
-    //                                 {comment.attachments.map((attachment) => (
-    //                                     <FullScreenImage
-    //                                         key={attachment}
-    //                                         src={getImageUrl("ticket_comments", comment.id, attachment)}
-    //                                     />
-    //                                 ))}
-    //                             </div>
-    //                         )}
+    // {comment.attachments.length > 0 && (
+    //     <div className="mt-3 grid grid-cols-2 md:grid-cols-3 gap-3">
+    //         {comment.attachments.map((attachment) => (
+    //             <FullScreenImage
+    //                 key={attachment}
+    //                 src={getImageUrl("ticket_comments", comment.id, attachment)}
+    //             />
+    //         ))}
+    //     </div>
+    // )}
     //                     </div>
     //                 ))}
     //             </div>
@@ -201,14 +202,8 @@ export default async function TicketById({ params }: { params: { ticketId: strin
               {ticket.id}
             </p>
 
-            <p className="mt-2">
-              {ticket.description
-                .split(/(?<=[.!?])\s+/)
-                .map((sentence, index) => (
-                  <span key={index} className="block mb-6">
-                    {sentence}
-                  </span>
-                ))}
+            <p className="mt-6 whitespace-pre-wrap">
+              {ticket.description}
             </p>
           </div>
           <div className="py-4">
@@ -306,8 +301,18 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                     </p>
                   </div>
                 </div>
-                <p className="mt-6 whitespace-pre-wrap text-sm">
+                <p className="mt-6 whitespace-pre-wrap">
                   {comment.content}
+                  {comment.attachments.length > 0 && (
+                    <div className="mt-3 grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {comment.attachments.map((attachment) => (
+                        <FullScreenImage
+                          key={attachment}
+                          src={getImageUrl("ticket_comments", comment.id, attachment)}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </p>
               </div>
             ))}

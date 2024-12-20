@@ -273,7 +273,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
             {comments.map((comment) => (
               <div
                 key={comment.id}
-                className="shadow-sm p-6 bg-gray-700"
+                className="shadow-sm p-6 bg-gray-800"
               >
                 <div className="flex items-center gap-3">
                   <img

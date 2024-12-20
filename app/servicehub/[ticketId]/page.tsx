@@ -185,7 +185,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                     day: "numeric",
                     year: "numeric",
                   })
-                  .replace(/,/g, "") 
+                  .replace(/,/g, "")
                   .replace("am", "AM")
                   .replace("pm", "PM")}
               </p>
@@ -200,12 +200,12 @@ export default async function TicketById({ params }: { params: { ticketId: strin
               <span className="w-2 h-2 inline-block"></span>
               {ticket.id}
             </p>
-           
+
             <p className="mt-2">
               {ticket.description
-                .split(/(?<=[.!?])\s+/) 
+                .split(/(?<=[.!?])\s+/)
                 .map((sentence, index) => (
-                  <span key={index} className="block mb-6"> 
+                  <span key={index} className="block mb-6">
                     {sentence}
                   </span>
                 ))}
@@ -213,18 +213,18 @@ export default async function TicketById({ params }: { params: { ticketId: strin
           </div>
           <div className="py-4">
             <div className="flex justify-center">
-              <div className="border p-2 rounded"> 
+              <div className="border p-2 rounded">
                 <MarkResolvedButton ticketId={params.ticketId} currentStatus={ticket.status} />
               </div>
             </div>
           </div>
         </div>
 
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 p-6 shadow-md rounded-md">
-          <div className="lg:col-span-2 space-y-4">
-            {comments.map((comment) => (
-              <div key={comment.id} className="p-4 border rounded-lg shadow-sm p-6">
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 p-6 shadow-md rounded-md ">
+          <div className="lg:col-span-2 space-y-4 ">
+            {/* {comments.map((comment) => (
+              <div key={comment.id} className="p-4 border rounded-lg shadow-sm p-6 bg-gray-700">
                 <div className="flex items-center gap-3">
                   <img
                     src={
@@ -267,6 +267,47 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                         {sentence}
                       </span>
                     ))}
+                </p>
+              </div>
+            ))} */}
+            {comments.map((comment) => (
+              <div
+                key={comment.id}
+                className="shadow-sm p-6 bg-gray-700"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src={
+                      comment.expand.user.avatar
+                        ? pb.files.getUrl(comment.expand.user, comment.expand.user.avatar)
+                        : "/default-avatar.png"
+                    }
+                    alt={comment.expand.user.name}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div className="flex w-full items-center">
+                    <div>
+                      <p className="text-sm font-semibold">{comment.expand.user.name}</p>
+                      <p className="text-xs text-gray-400">{comment.expand.user.sub}</p>
+                    </div>
+                    <p className="text-sm text-gray-400 ml-auto">
+                      {new Date(comment.created)
+                        .toLocaleString("en-US", {
+                          hour: "numeric",
+                          minute: "2-digit",
+                          hour12: true,
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })
+                        .replace(/,/g, "")
+                        .replace("am", "AM")
+                        .replace("pm", "PM")}
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-2 whitespace-pre-wrap text-sm">
+                  {comment.content}
                 </p>
               </div>
             ))}

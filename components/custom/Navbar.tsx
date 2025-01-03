@@ -65,7 +65,7 @@ export default async function Navbar() {
                             <div className="lg:absolute max-h-0 group-hover/b:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/b:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
                                 <ul className="w-full">
                                     <li className="w-full">
-                                        <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">APIs</Link>
+                                        <Link href="/build-api" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">APIs</Link>
                                     </li>
                                     <li className="w-full">
                                         <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">User Interfaces &amp; Experience (UI/UX)</Link>

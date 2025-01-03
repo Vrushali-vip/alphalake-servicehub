@@ -17,7 +17,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
             filter: `ticket.id="${params.ticketId}"`,
             expand: "user",
             fields: "id,ticket,user,content,created,attachments,expand,user.id,user.name",
-            sort: "-created",
+            sort: "created",
             $autoCancel: false
         }),
     ]);

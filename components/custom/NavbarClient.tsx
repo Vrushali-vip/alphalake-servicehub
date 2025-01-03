@@ -546,7 +546,11 @@ export default function NavbarClient() {
                   </Link>
                 </DropdownMenuItem>
               )}
-              <DropdownMenuItem disabled>Profile</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/profile" className="w-full cursor-pointer">
+                  Profile
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <button className="w-full cursor-pointer" onClick={onLogOutClick}>
                   Log Out

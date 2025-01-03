@@ -171,6 +171,7 @@ export default function SupportDashboardGrid({
     <div className="container mx-auto px-4 max-w-7xl">
       <div className="mb-6">
         <TicketSearch
+        
           nameFilter={nameFilter}
           setNameFilter={setNameFilter}
           statusFilter={statusFilter}

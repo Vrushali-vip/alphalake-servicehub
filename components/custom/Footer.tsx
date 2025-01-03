@@ -127,7 +127,7 @@ export default function Footer() {
                 </div>
             </div> */}
 
-      <div className="mx-auto max-w-5xl py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
         <div className="flex justify-center">
           <Image
             src="/logo-light.png"
@@ -268,7 +268,7 @@ export default function Footer() {
                 <Link href="#">Insights, Articles &amp; Blogs</Link>
               </li>
               <li className="transition-all hover:text-primary-foreground hover:tracking-wider">
-                <Link href="#">Partner Programme</Link>
+                <Link href="/partner-program">Partner Programme</Link>
               </li>
             </ul>
           </div>
@@ -282,10 +282,10 @@ export default function Footer() {
                 <Link href="#">Careers</Link>
               </li>
               <li className="transition-all hover:text-primary-foreground hover:tracking-wider">
-                <Link href="#">Contact</Link>
+                <Link href="/contact">Contact</Link>
               </li>
               <li className="transition-all hover:text-primary-foreground hover:tracking-wider">
-                <Link href="#">Terms &amp; Conditions</Link>
+                <Link href="/terms-condition">Terms &amp; Conditions</Link>
               </li>
             </ul>
           </div>

@@ -460,7 +460,7 @@ export default function NavbarClient() {
   const isAdminOrSupport = session?.data?.user?.role === "ADMIN" || session?.data?.user?.role === "SUPPORT";
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center gap-4">
       <div
         ref={countryDropdownRef}
         className={`relative transition-transform duration-300 ease-in-out ${session?.data?.user ? 'translate-x-4' : 'translate-x-0'
@@ -491,32 +491,37 @@ export default function NavbarClient() {
           )}
         </div>
         <div
-          className={`absolute top-full left-0 mt-1 bg-background text-primary shadow-md border rounded-md z-50 w-full 
-      ${isCountryMenuOpen ? 'block' : 'hidden'}`}
-        >
-          {countries.map((country) => (
-            <div
-              key={country.code}
-              onClick={() => handleCountrySelect(country)}
-              className="flex items-center gap-2 cursor-pointer px-3 py-2"
-            >
-              <Image
-                src={country.flag}
-                alt={country.name}
-                width={24}
-                height={24}
-                className="rounded-full object-cover object-center"
-                style={{
-                  borderRadius: '50%',
-                  aspectRatio: '1/1',
-                  width: '24px',
-                  height: '24px',
-                }}
-              />
-              {country.name}
-            </div>
-          ))}
-        </div>
+  className={`absolute top-full left-0 mt-1 bg-background text-primary shadow-md border rounded-md z-50 w-32 
+  ${isCountryMenuOpen ? 'block' : 'hidden'} overflow-auto`}
+  style={{
+    maxHeight: '200px', // Limits the dropdown height
+    overflowY: 'auto', // Adds scroll if content overflows vertically
+  }}
+>
+  {countries.map((country) => (
+    <div
+      key={country.code}
+      onClick={() => handleCountrySelect(country)}
+      className="flex items-center gap-2 cursor-pointer px-3 py-2"
+    >
+      <Image
+        src={country.flag}
+        alt={country.name}
+        width={24}
+        height={24}
+        className="rounded-full object-cover object-center"
+        style={{
+          borderRadius: '50%',
+          aspectRatio: '1/1',
+          width: '24px',
+          height: '24px',
+        }}
+      />
+      {country.name}
+    </div>
+  ))}
+</div>
+
       </div>
 
       {session?.data?.user ? (

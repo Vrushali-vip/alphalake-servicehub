@@ -97,3 +97,16 @@ export type TicketListItemForSupport = {
         }
     }
 }
+
+// types.ts
+export interface TeamMember {
+    id: string;
+    name: string;
+    email: string;
+    avatar: string;
+    sub: string;
+    linkedin_url?: string;
+    facebook_url?: string;
+    description: string;
+    eid: number;
+  }

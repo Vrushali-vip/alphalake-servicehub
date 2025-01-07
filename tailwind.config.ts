@@ -95,8 +95,28 @@ const config: Config = {
 				typewriter: 'typewriter 4s steps(40) 1s 1 normal both',
 				blink: 'blink 1s steps(2) infinite',
 			},
+			
 		}
 	},
-	plugins: [tailwindAnimate],
+	plugins: [
+		tailwindAnimate,
+		function (api: { addUtilities: (utilities: Record<string, Record<string, string>>) => void; }) {
+		  const { addUtilities } = api as {
+			addUtilities: (utilities: Record<string, Record<string, string>>) => void;
+		  };
+		  addUtilities({
+			".backface-hidden": {
+			  "backface-visibility": "hidden",
+			},
+			".preserve-3d": {
+			  "transform-style": "preserve-3d",
+			},
+			".perspective-1000": {
+			  perspective: "1000px",
+			},
+		  });
+		},
+	  ],
 };
+
 export default config;

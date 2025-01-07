@@ -22,6 +22,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
     }),
   ]);
 
+  // console.log(ticket, ticket.expand.user);
   return (
     <main className="min-h-screen p-4 flex justify-center items-center">
       <div className="w-full max-w-4xl space-y-8">
@@ -86,53 +87,6 @@ export default async function TicketById({ params }: { params: { ticketId: strin
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 p-6 shadow-md rounded-md ">
           <div className="lg:col-span-2 space-y-4 ">
-            {/* {comments.map((comment) => (
-              <div key={comment.id} className="p-4 border rounded-lg shadow-sm p-6 bg-gray-700">
-                <div className="flex items-center gap-3">
-                  <img
-                    src={
-                      comment.expand.user.avatar
-                        ? pb.files.getUrl(comment.expand.user, comment.expand.user.avatar)
-                        : "/default-avatar.png"
-                    }
-                    alt={comment.expand.user.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                  <div className="flex w-full items-center">
-                    <div>
-                      <p className="text-sm font-semibold">{comment.expand.user.name}</p>
-                      <p className="text-xs text-gray-500">{comment.expand.user.sub}</p>
-                    </div>
-                    <p className="text-sm text-gray-400 ml-auto">
-                      {new Date(comment.created)
-                        .toLocaleString("en-US", {
-                          hour: "numeric",
-                          minute: "2-digit",
-                          hour12: true,
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        })
-                        .replace(/,/g, "") 
-                        .replace("am", "AM")
-                        .replace("pm", "PM")}
-                    </p>
-                  </div>
-                </div>
-                <p className="mt-2">
-                  {comment.content
-                    .split(/(?<=[.!?])\s+/) 
-                    .map((sentence, index, arr) => (
-                      <span
-                        key={index}
-                        className={`block ${index < arr.length - 1 ? 'mb-6' : ''}`} 
-                      >
-                        {sentence}
-                      </span>
-                    ))}
-                </p>
-              </div>
-            ))} */}
             {comments.map((comment) => (
               <div
                 key={comment.id}

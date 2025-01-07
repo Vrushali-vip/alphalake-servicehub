@@ -96,13 +96,16 @@ body {
 }
 
 .status-OPEN {
-  @apply bg-green-600;
+  @apply bg-blue-500;
 }
 .status-CLOSED {
   @apply bg-red-600;
 }
-.status-PROGRESSS {
+.status-PROGRESS {
   @apply bg-yellow-600;
+}
+.status-RESOLVED {
+  @apply bg-green-600;
 }
 
 @layer base {

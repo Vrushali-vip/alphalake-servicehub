@@ -276,7 +276,7 @@ export default function Footer() {
             <h4 className="capitalize font-semibold">COMPANY</h4>
             <ul className="text-muted-foreground space-y-2 pt-3 text-sm">
               <li className="transition-all hover:text-primary-foreground hover:tracking-wider">
-                <Link href="#">About Us</Link>
+                <Link href="/about-us">About Us</Link>
               </li>
               <li className="transition-all hover:text-primary-foreground hover:tracking-wider">
                 <Link href="#">Careers</Link>

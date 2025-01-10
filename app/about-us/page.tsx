@@ -161,13 +161,13 @@ import pb, { getImageUrl } from '@/lib/pocketbase';
 import { TeamMember } from '../servicehub/types';
 
 const TeamSheet = async () => {
-    const users: TeamMember[] = [];  // Explicitly define the type
+    const users: TeamMember[] = [];  
     try {
         const fetchedUsers = await pb.collection("team").getFullList<TeamMember>({
             fields: "id,name,email,avatar,sub,linkedin_url,facebook_url,description,eid",
             sort: "eid",
         });
-        users.push(...fetchedUsers);  // Add the fetched users to the array
+        users.push(...fetchedUsers);  
     } catch (error) {
         console.error("Error fetching team members:", error);
     }
